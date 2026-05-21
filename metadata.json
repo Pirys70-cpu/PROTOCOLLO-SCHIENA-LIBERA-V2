@@ -1,0 +1,6 @@
+{
+  "name": "Protocollo Schiena Libera",
+  "description": "Landing page di vendita professionale con console di gestione per Pixel di Meta e link di pagamento Hotmart.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
