@@ -101,6 +101,9 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
   // Active chapter in interactive book preview
   const [activeChapter, setActiveChapter] = useState<number>(0);
 
+  // FAQ accordion state variable to boost conversions
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
   // Countdown effect (ticks standard minutes/seconds/milliseconds for heavy urgency)
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1314,8 +1317,8 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
         </div>
 
         <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-          
-          {/* Visual Banner - Inizia oggi la tua trasformazione */}
+
+           {/* Visual Banner - Inizia oggi la tua trasformazione */}
           <div className="mb-10 flex justify-center">
             <div className="relative w-full max-w-[680px] rounded-2xl overflow-hidden border border-[#1e1a38] shadow-2xl bg-slate-950">
               <img 
@@ -1331,10 +1334,10 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-slate-950/90 backdrop-blur-md max-w-3xl mx-auto p-8 rounded-3xl border-2 border-violet-500/30 shadow-2xl space-y-7 relative"
+            className="bg-slate-950/90 backdrop-blur-md max-w-3xl mx-auto p-6 sm:p-10 rounded-3xl border-2 border-violet-500/30 shadow-2xl space-y-8 relative"
           >
             {/* Urgency countdown indicator inside the purchase block */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl border border-red-500/30">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl border border-red-500/30 whitespace-nowrap">
               SOLO COMPRANDO ORA RISERVI IL PREZZO SCONTATO
             </div>
 
@@ -1347,18 +1350,106 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               </p>
             </div>
 
-            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 text-left max-w-xl mx-auto space-y-3.5 shadow-2xl">
-              <h4 className="font-extrabold text-slate-200 text-xs sm:text-sm uppercase text-center border-b border-slate-800 pb-2">
-                COSA SBLOCCHERAI IMMEDIATAMENTE:
-              </h4>
+            {/* IRRESISTIBLE VALUE STACK: DIRECT BUNDLE CONVERSION */}
+            <div className="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 text-left max-w-2xl mx-auto space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-slate-850 pb-3">
+                <h4 className="font-extrabold text-slate-100 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-yellow-400" />
+                  COSA RICEVERAI IMMEDIATAMENTE:
+                </h4>
+                <span className="text-emerald-400 text-[10px] font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded uppercase">
+                  Accesso a vita
+                </span>
+              </div>
 
-              <div className="flex gap-3 items-start">
-                <div className="bg-amber-400 text-slate-950 p-1.5 rounded-lg shrink-0 shadow-md">
-                  <BookOpen className="w-5.5 h-5.5" />
+              <div className="space-y-3">
+                {/* Product 1 */}
+                <div className="flex gap-3 items-start bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
+                  <div className="bg-amber-400 text-slate-950 p-2 rounded-lg shrink-0 shadow-md">
+                    <BookOpen className="w-5 h-5 stroke-[2.5px]" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-baseline gap-2 flex-wrap sm:flex-nowrap">
+                      <p className="font-black text-white text-xs sm:text-sm">📖 Manuale PDF "Protocollo Schiena Libera"</p>
+                      <span className="text-slate-500 text-[10px] line-through font-mono">Valore €47.00</span>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">La guida strategica passo-passo del Dr. Marco per rilassare la colonna lombare in soli 7 giorni con schemi clinici.</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-extrabold text-white text-sm">📖 Protocollo Schiena Libera (Metodo Completo in 7 Giorni)</p>
-                  <p className="text-xs text-slate-400 mt-0.5">La guida PDF di rapido apprendimento sul rilassamento e l'autopostura discale da ufficio.</p>
+              </div>
+
+              <div className="pt-2 border-t border-slate-800 text-center">
+                <p className="text-xs text-slate-350">
+                  Prezzo Standard: <span className="line-through text-slate-500 font-extrabold">€47.00</span> • Oggi sblocchi l'accesso a soli <span className="text-amber-400 font-black text-sm">€17.00!</span>
+                </p>
+              </div>
+            </div>
+
+            {/* COMPARISON MATRIX ("Quanto vale NON soffrire più?") */}
+            <div className="max-w-2xl mx-auto space-y-4">
+              <h3 className="text-xs font-black uppercase text-slate-400 tracking-wider">
+                Mettiamo le opzioni sul tavolo con onestà:
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="bg-slate-900/30 border border-slate-850 p-4 rounded-xl text-left space-y-1.5 opacity-75">
+                  <div className="flex items-center gap-1.5 text-red-400 font-bold text-xs uppercase">
+                    <AlertCircle className="w-4 h-4" /> Antidolorifici
+                  </div>
+                  <div className="text-sm font-black text-white">€15 - €30 / mese</div>
+                  <p className="text-[11px] text-slate-400 leading-normal">
+                    Curano solo il sintomo, danneggiano fegato e stomaco, e il blocco ritorna peggiore di prima.
+                  </p>
+                </div>
+
+                <div className="bg-slate-900/30 border border-slate-850 p-4 rounded-xl text-left space-y-1.5 opacity-75">
+                  <div className="flex items-center gap-1.5 text-red-400 font-bold text-xs uppercase">
+                    <AlertCircle className="w-4 h-4" /> Fisioterapisti
+                  </div>
+                  <div className="text-sm font-black text-white">€70 - €120 / seduta</div>
+                  <p className="text-[11px] text-slate-400 leading-normal">
+                    Spesa folle e ripetitiva a vita se continui a stare seduto nello stesso identico modo d'ufficio.
+                  </p>
+                </div>
+
+                <div className="bg-violet-950/20 border-2 border-violet-500/30 p-4 rounded-xl text-left space-y-1.5 shadow-lg relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-yellow-400 text-slate-950 px-2 py-0.5 text-[7.5px] font-black uppercase tracking-wider rounded-bl-lg">
+                    Consigliato
+                  </div>
+                  <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs uppercase">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Il Protocollo
+                  </div>
+                  <div className="text-sm font-black text-white">€17 Una Volta Sola</div>
+                  <p className="text-[11px] text-slate-300 leading-normal">
+                    La soluzione naturale, definitiva e discreta da fare a costo zero comodamente a casa tua.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* THE DECISIVE CROSSROAD ("Sei a un bivio") */}
+            <div className="bg-slate-900/40 p-6 rounded-2xl border border-violet-500/10 text-left max-w-2xl mx-auto space-y-4">
+              <h3 className="text-center font-extrabold text-[#fbbf24] text-xs uppercase tracking-widest">
+                ⚓ ORA SEI AD UN BIVIO DECISIVO. HAI SOLO DUE STRADE:
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <div className="bg-slate-950/80 p-4.5 rounded-xl border border-red-500/10 text-xs text-slate-400 space-y-2">
+                  <div className="text-red-400 font-black uppercase text-[10px] tracking-wider leading-none flex items-center gap-1.5">
+                    <AlertCircle className="w-4 h-4 shrink-0" /> Strada A (Non agire):
+                  </div>
+                  <p className="leading-relaxed">
+                    Lasciare la pagina. Continuare a ignorare la rigidità, usare farmaci e sopportare fitte sorde che logorano la concentrazione sul lavoro, attendendo il prossimo blocco lombare invalidante.
+                  </p>
+                </div>
+
+                <div className="bg-slate-950/80 p-4.5 rounded-xl border border-emerald-500/20 text-xs text-slate-300 space-y-2 relative shadow-md">
+                  <div className="text-emerald-400 font-black uppercase text-[10px] tracking-wider leading-none flex items-center gap-1.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 stroke-[3px]" /> Strada B (Agire a Rischio Zero):
+                  </div>
+                  <p className="leading-relaxed">
+                    Investire <strong>€17</strong> oggi (meno di una pizza con gli amici), sbloccare il protocollo a vita, ritrovare una schiena flessibile ed elastica, coperto dalla garanzia soddisfatti o rimborsati.
+                  </p>
                 </div>
               </div>
             </div>
@@ -1391,7 +1482,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               </motion.button>
 
               <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 font-medium gap-3 pt-3 border-t border-slate-900/80">
-                <span className="text-red-400 font-black bg-red-950/30 border border-red-500/20 px-2.5 py-1 rounded">
+                <span className="text-red-400 font-black bg-red-950/30 border border-red-500/20 px-2.5 py-1 rounded animate-pulse">
                   ⚠️ Offerta attiva per i prossimi 100 clienti (Rimasti solo {spotsLeft}!)
                 </span>
                 <span className="flex items-center gap-1 text-[10px]">
@@ -1401,6 +1492,66 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
             </div>
 
           </motion.div>
+
+          {/* FAQS AREA COMPONENT - SQUEEZING MAXIMUM OBJECTIONS OUT OF THE CONVERTED VISITOR */}
+          <div className="max-w-3xl mx-auto mt-20 text-left space-y-6">
+            <div className="text-center">
+              <span className="bg-violet-500/10 text-violet-400 border border-violet-500/20 text-[9px] uppercase font-black tracking-widest px-3 py-1 rounded inline-block">
+                Domande Frequenti (FAQ)
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white uppercase font-display mt-3 tracking-tight">
+                DUBBI? ABBIAMO LE RISPOSTE
+              </h3>
+              <p className="text-xs text-slate-400 mt-1 max-w-lg mx-auto">
+                Prima di fare la tua scelta sicura a rischio zero, leggi le domande più frequenti poste dai nostri clienti prima dell'acquisto.
+              </p>
+            </div>
+
+            <div className="space-y-3 pt-3">
+              {[
+                {
+                  q: "È adatto a chi ha già un'ernia o una protrusione lombare?",
+                  a: "Assolutamente sì. Gli esercizi di de-compressione sono naturali, statici e mirano a ripristinare lo spazio corretto intervertebrale L4-L5 ed S1, allontanando con delicatezza i corpi ossei spinali per allentare la morsa dolorosa sul nervo sciatico."
+                },
+                {
+                  q: "Non ho mai fatto ginnastica posturale o fisioterapia prima. È difficile?",
+                  a: "No, affatto. Il Protocollo Schiena Libera è stato concepito appositamente per le persone pigre o con scarso dinamismo motorio d'ufficio. Include illustrazioni ad alta definizione semplici e sicure da ripetere senza alcun tipo di rischio d'errore."
+                },
+                {
+                  q: "Richiede molto tempo durante la mia giornata lavorativa?",
+                  a: "Fai tutto in soli 10 minuti complessivi. Le routine sono velocissime ed alcune possono essere tranquillamente eseguite in modo 'invisibile' direttamente in sedia alla scrivania senza che i colleghi o superiori se ne accorgano."
+                },
+                {
+                  q: "Come avviene l'acquisto dei €17 e come ricevo il manuale?",
+                  a: "L'erogazione è totalmente istantanea. Subito dopo aver effettuato il pagamento protetto a 256-bit, riceverai una mail di conferma contenente il link per il download immediato della guida PDF."
+                },
+                {
+                  q: "E se mi accorgo che per me non funziona?",
+                  a: "La tua serenità è garantita al 100%. Abbiamo inserito una garanzia soddisfatti o rimborsati di 30 giorni consecutivi. Se la tua schiena non risulterà rigenerata ed elastica, inviaci una mail al nostro indirizzo di supporto clinico ed effettueremo il rimborso totale dei €17 senza fare obiezione alcuna."
+                }
+              ].map((faq, fIdx) => (
+                <div 
+                  key={fIdx} 
+                  className="bg-[#0b0c16]/70 border border-slate-850 rounded-2xl overflow-hidden transition-all duration-350"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === fIdx ? null : fIdx)}
+                    className="w-full p-4.5 text-left text-xs sm:text-sm font-bold text-white flex justify-between items-center gap-4 hover:bg-slate-900/30 transition-colors cursor-pointer"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="text-violet-400 font-extrabold text-xs">
+                      {openFaq === fIdx ? "–" : "+"}
+                    </span>
+                  </button>
+                  {openFaq === fIdx && (
+                    <div className="p-4.5 bg-slate-950/60 border-t border-slate-900/60 text-slate-300 text-xs leading-relaxed space-y-1">
+                      <p>{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
         </div>
       </section>
@@ -1464,17 +1615,6 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 <a href={`mailto:${supportEmail}`} className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 font-bold">
                   <Mail className="w-4 h-4 text-violet-400" />
                   <span>Supporto Email</span>
-                </a>
-              )}
-              {supportWhatsapp && (
-                <a 
-                  href={supportWhatsapp.startsWith('http') ? supportWhatsapp : `https://wa.me/${supportWhatsapp.replace(/[^0-9]/g, '')}`} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="px-3.5 py-1.5 rounded-lg bg-emerald-950/25 border border-emerald-500/20 text-emerald-400 hover:text-emerald-300 transition-all flex items-center gap-1.5 font-bold"
-                >
-                  <MessageCircle className="w-4 h-4 text-emerald-500" />
-                  <span>Chiedi Aiuto via WhatsApp</span>
                 </a>
               )}
             </div>
