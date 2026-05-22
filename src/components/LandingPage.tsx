@@ -1172,7 +1172,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Same character representing Dr. Marco Wellness */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop" 
+                    src="https://drive.google.com/file/d/1zN4mcFzWXchdMtGSGfVMhknUmCMSUSGD/view?usp=sharing" 
                     alt="Dr. Marco Wellness in camice bianco clinico" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
@@ -1188,6 +1188,38 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
 
           </div>
 
+        </div>
+      </section>
+
+      {/* SECTION: TESTIMONIANZE */}
+      <section id="section-testimonials" className="py-16 md:py-24 bg-slate-950 relative border-b border-violet-950/20">
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-violet-600 rounded-full blur-[140px]" />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <span className="bg-violet-500/10 text-violet-400 text-xs uppercase font-extrabold tracking-widest px-3 py-1 rounded border border-violet-500/20">
+              Storie di Successo
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-white font-display uppercase tracking-tight mt-4 leading-none">
+              COSA DICONO I NOSTRI CLIENTI
+            </h2>
+            <p className="text-base text-slate-400 mt-3 max-w-xl mx-auto">
+              L'esperienza reale di chi ha ritrovato il benessere e dimenticato il dolore lombare grazie al protocollo naturale.
+            </p>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="relative w-full max-w-[700px] rounded-2xl overflow-hidden border border-violet-500/25 shadow-2xl bg-slate-900/40 p-2 sm:p-3">
+              <img 
+                src={getDirectImageUrl("https://drive.google.com/file/d/1SBbbnov5V8hTvO483vi-p04DqQD9FAwR/view?usp=sharing")} 
+                alt="Cliente soddisfatto" 
+                className="testimonial-image w-full h-auto rounded-xl object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
