@@ -1199,6 +1199,18 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
 
         <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
           
+          {/* Visual Banner - Basta soffrire in silenzio */}
+          <div className="mb-10 flex justify-center">
+            <div className="relative w-full max-w-[680px] rounded-2xl overflow-hidden border border-[#1e1a38] shadow-2xl bg-slate-950">
+              <img 
+                src={getDirectImageUrl("https://drive.google.com/file/d/1FXdhrnD52ZC6ZziLcoIDLjk-86ZzFM1l/view?usp=sharing")} 
+                alt="Basta soffrire in silenzio" 
+                className="w-full h-auto object-cover opacity-100"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+
           <motion.div 
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
