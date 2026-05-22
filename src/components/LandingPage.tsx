@@ -209,7 +209,13 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
       </div>
 
       {/* SECTION 1: EROICA / HERO SECTION (Slide 1) */}
-      <section id="section-hero" className="relative pt-12 md:pt-20 pb-16 md:pb-24 overflow-hidden border-b border-violet-950/20">
+      <section 
+        id="section-hero" 
+        className="relative pt-12 md:pt-20 pb-16 md:pb-24 overflow-hidden border-b border-violet-950/20 bg-cover bg-center"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(9, 12, 34, 0.85), rgba(5, 7, 20, 0.94)), url(${getDirectImageUrl("https://drive.google.com/file/d/1TlKJyjEEBj5wf1BKYJdkhvYdXkUsU9lh/view?usp=sharing")})`,
+        }}
+      >
         {/* Ambient atmospheric glow dots */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] pointer-events-none opacity-20">
           <div className="absolute top-12 left-10 w-80 h-80 bg-violet-600 rounded-full blur-[140px] animate-pulse-glow" />
