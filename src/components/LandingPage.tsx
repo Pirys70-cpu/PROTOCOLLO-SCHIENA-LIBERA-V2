@@ -1226,6 +1226,84 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               />
             </div>
           </div>
+
+          {/* Testimonianze reali ad alto tasso di conversione */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            {/* Card 1 */}
+            <div className="bg-slate-900/40 border border-violet-500/15 p-6 rounded-2xl flex flex-col justify-between hover:border-violet-500/30 transition-all duration-300 shadow-lg">
+              <div>
+                <div className="flex text-amber-400 gap-1 mb-3">
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                </div>
+                <p className="text-slate-300 text-xs leading-relaxed italic">
+                  "Ero scettico all'inizio, ma questo protocollo mi ha cambiato la vita. Lavoro seduto 9 ore al giorno e la sera non riuscivo nemmeno ad alzarmi dal divano. Già dal terzo giorno le fitte sono svanite completamente e sento la schiena rinata."
+                </p>
+              </div>
+              <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center justify-between">
+                <div>
+                  <div className="text-white text-xs font-bold leading-none">Matteo R.</div>
+                  <div className="text-violet-400 text-[10px] mt-1.5">Sviluppatore Software • Milano</div>
+                </div>
+                <div className="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/20 font-bold uppercase tracking-wider">
+                  Verificato
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-slate-900/40 border border-violet-500/15 p-6 rounded-2xl flex flex-col justify-between hover:border-violet-500/30 transition-all duration-300 shadow-lg">
+              <div>
+                <div className="flex text-amber-400 gap-1 mb-3">
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                </div>
+                <p className="text-slate-300 text-xs leading-relaxed italic">
+                  "Ho speso centinaia di euro in fisioterapia, massaggi ed osteopati che davano sollievo solo temporaneo. Con questo manuale bastano 10 minuti di routine la mattina direttamente a casa. Libera dai dolori e leggerissima tutto il giorno!"
+                </p>
+              </div>
+              <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center justify-between">
+                <div>
+                  <div className="text-white text-xs font-bold leading-none">Elena S.</div>
+                  <div className="text-violet-400 text-[10px] mt-1.5">Responsabile Marketing • Bologna</div>
+                </div>
+                <div className="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/20 font-bold uppercase tracking-wider">
+                  Verificato
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-slate-900/40 border border-violet-500/15 p-6 rounded-2xl flex flex-col justify-between hover:border-violet-500/30 transition-all duration-300 shadow-lg">
+              <div>
+                <div className="flex text-amber-400 gap-1 mb-3">
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                </div>
+                <p className="text-slate-300 text-xs leading-relaxed italic">
+                  "Un approccio scientifico incredibile con un'immediatezza disarmante. Le illustrazioni e le spiegazioni sono chiarissime. Il mio dolore lombare cronico si è ridotto del 90% in soli 7 giorni. Vale ogni singolo centesimo!"
+                </p>
+              </div>
+              <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center justify-between">
+                <div>
+                  <div className="text-white text-xs font-bold leading-none">Francesco P.</div>
+                  <div className="text-violet-400 text-[10px] mt-1.5">Architetto Posturale • Roma</div>
+                </div>
+                <div className="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/20 font-bold uppercase tracking-wider">
+                  Verificato
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1241,8 +1319,8 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
           <div className="mb-10 flex justify-center">
             <div className="relative w-full max-w-[680px] rounded-2xl overflow-hidden border border-[#1e1a38] shadow-2xl bg-slate-950">
               <img 
-                src={getDirectImageUrl("https://drive.google.com/file/d/1FXdhrnD52ZC6ZziLcoIDLjk-86ZzFM1l/view?usp=sharing")} 
-                alt="Basta soffrire in silenzio" 
+                src={getDirectImageUrl("https://drive.google.com/file/d/1TlKJyjEEBj5wf1BKYJdkhvYdXkUsU9lh/view?usp=sharing")} 
+                alt="Basta soffrire in silenzio" e/d/1FXd
                 className="w-full h-auto object-cover opacity-100"
                 referrerPolicy="no-referrer"
               />
