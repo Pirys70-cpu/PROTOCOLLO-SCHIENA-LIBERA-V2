@@ -348,7 +348,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10 pointer-events-none" />
                   
                   <img 
-                    src={getDirectImageUrl("https://drive.google.com/file/d/1wzR7EyxtQzZgMf5iBs3Ttpg5FHzdyiXY/view?usp=sharing")} 
+                    src={getDirectImageUrl("https://drive.google.com/file/d/14Rl-KGv5m1qFs5_yEJns7L0TLUwytbpb/view?usp=sharing")} 
                     alt="Protocollo Schiena Libera - Metodo naturale in 7 giorni" 
                     className="w-full h-full object-cover opacity-100 hero-image"
                     style={{ filter: 'brightness(1.08) contrast(1.02)', objectPosition: 'center 15%' }}
@@ -1178,7 +1178,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Same character representing Dr. Marco Wellness */}
                 <div className="absolute inset-0">
                   <img 
-                    src={getDirectImageUrl("https://drive.google.com/file/d/1zN4mcFzWXchdMtGSGfVMhknUmCMSUSGD/view?usp=sharing")} 
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1k4lZWzL1va88jqwmy2vI7veDUVSLDyMQ/view?usp=sharing")} 
                     alt="Dr. Marco Wellness in camice bianco clinico" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
