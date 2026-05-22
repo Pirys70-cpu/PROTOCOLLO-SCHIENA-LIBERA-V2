@@ -410,12 +410,12 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               <div className="relative w-full max-w-[465px] aspect-square rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl group">
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent z-10" />
                 
-                {/* Lavoratore stressato con mal di schiena dopo ore al computer */}
-                <div className="absolute inset-0 bg-slate-950/20">
+                {/* Professional sitting at his office desk experiencing severe back and postural stiffness */}
+                <div className="absolute inset-0">
                   <img 
                     src={getDirectImageUrl("https://drive.google.com/file/d/1SmrA4Ry7VZK7wnZjv0ivAExK42LsLMfd/view?usp=sharing")} 
                     alt="Lavoratore stressato con mal di schiena dopo ore al computer" 
-                    className="w-full h-full object-cover opacity-95 hero-image"
+                    className="w-full h-full object-cover opacity-80"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -424,10 +424,10 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 <div className="absolute bottom-6 left-6 right-6 z-20 bg-slate-950/95 border border-red-500/30 p-4 rounded-xl shadow-2xl">
                   <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider mb-1">
                     <AlertCircle className="w-4 h-4 text-red-500 animate-bounce" />
-                    <span>Ti riconosci in questa situazione?</span>
+                    <span>Postura statica prolungata</span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Ore e ore davanti al computer... la schiena che si irrigidisce...
+                    Stare seduti provoca uno schiacciamento asimmetrico continuo che disidrata i dischi lombari, bloccando l'afflusso naturale dei liquidi lubrificanti.
                   </p>
                 </div>
               </div>
@@ -676,23 +676,23 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               </div>
             </div>
 
-            {/* Right Column: Original smiling character (Slide 3) */}
+            {/* Right Column: Google Drive Solution Image (Slide 3) */}
             <div className="lg:col-span-6 flex justify-center order-1 lg:order-2">
-              <div className="relative w-full max-w-[430px] aspect-square rounded-2xl overflow-hidden border border-violet-500/25 shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent z-10" />
+              <div className="relative w-full max-w-[430px] aspect-square rounded-2xl overflow-hidden border border-violet-500/25 shadow-2xl bg-slate-950">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10 pointer-events-none" />
                 
-                {/* Same character portrait matching slide 3 (smiling office man in white shirt showing back health success) */}
+                {/* Provided Google Drive Image with high visibility */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=600&auto=format&fit=crop" 
-                    alt="Professionista sorridente senza dolore lombare" 
-                    className="w-full h-full object-cover opacity-85"
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1hm_nXM9NdwVPLnbuZqz_d2PIkS1JKh6f/view?usp=sharing")} 
+                    alt="Libertà dal dolore" 
+                    className="w-full h-full object-cover opacity-100"
                     referrerPolicy="no-referrer"
                   />
                 </div>
 
-                <div className="absolute bottom-4 right-4 z-20 bg-violet-600/90 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-violet-400/30">
-                  Lavoro in scioltezza
+                <div className="absolute bottom-4 right-4 z-20 bg-emerald-600/90 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-emerald-400/30">
+                  Libertà dal dolore
                 </div>
               </div>
             </div>
