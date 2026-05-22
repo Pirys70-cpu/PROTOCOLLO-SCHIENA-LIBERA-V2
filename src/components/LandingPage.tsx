@@ -66,7 +66,7 @@ const QUIZ_QUESTIONS = [
 const PURCHASES_LOG = [
   { name: "Fabio da Roma", action: "ha sbloccato la schiena con il Protocollo PDF", time: "2 min fa" },
   { name: "Valentina da Milano", action: "ha acquistato l'offerta a soli €17", time: "In questo momento!" },
-  { name: "Alessandro da Bologna", action: "ha scaricato il video manuale d'ufficio", time: "1 min fa" },
+  { name: "Alessandro da Bologna", action: "ha scaricato il manuale PDF d'ufficio", time: "1 min fa" },
   { name: "Elena da Torino", action: "ha appena completato la routine di 10 minuti", time: "4 min fa" },
   { name: "Giuseppe da Napoli", action: "ha scelto l'accesso digitale sicuro", time: "6 min fa" },
   { name: "Chiara da Firenze", action: "ha attivato la garanzia soddisfatti o rimborsati", time: "8 min fa" }
@@ -216,7 +216,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-300 text-xs font-semibold mb-6 uppercase tracking-widest"
             >
               <Award className="w-4 h-4 text-violet-400" />
-              <span>GUIDA DIGITALE + VIDEO ESERCIZI ILLUSTRATI</span>
+              <span>GUIDA DIGITALE IN FORMATO PDF</span>
             </motion.div>
 
             {/* Core Display Title mimicking visual mockup exactly */}
@@ -270,7 +270,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                   </li>
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Video Passo-Passo:</strong> Accedi a filmati in HD per una perfetta esecuzione.</span>
+                    <span><strong>Illustrazioni HD:</strong> Schemi chiari e spiegazioni anatomiche precise e semplici.</span>
                   </li>
                 </ul>
 
@@ -331,7 +331,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* The Unsplash asset represents our handsome character inside a bright modern office */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&h=600&q=80" 
+                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&h=600&q=80" 
                     alt="Dr. Marco Wellness - Fisioterapista ed esperto di benessere lombare" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
@@ -396,11 +396,11 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               <div className="relative w-full max-w-[465px] aspect-square rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl group">
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent z-10" />
                 
-                {/* Same Character sitting at desk at late night experiencing back stiffness */}
+                {/* Professional sitting at his office desk experiencing severe back and postural stiffness */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1604881991720-f91add269bee?q=80&w=600&auto=format&fit=crop" 
-                    alt="Lavoratrice con forti dolori posturali e rigidità muscolare alla schiena" 
+                    src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=600&auto=format&fit=crop" 
+                    alt="Professionista con forti dolori posturali e rigidità muscolare alla schiena in ufficio" 
                     className="w-full h-full object-cover opacity-80"
                     referrerPolicy="no-referrer"
                   />
@@ -670,7 +670,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Same character portrait matching slide 3 (smiling office man in white shirt showing back health success) */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=600&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=600&auto=format&fit=crop" 
                     alt="Professionista sorridente senza dolore lombare" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
@@ -981,7 +981,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Book Reference Photo 1 */}
                 <div className="h-32 rounded-xl overflow-hidden relative border border-slate-800/50">
                   <img 
-                    src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=400&h=200&q=80" 
+                    src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=400&h=200&q=80" 
                     alt="De-compressione facciale della schiena a terra" 
                     className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
@@ -1019,7 +1019,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Book Reference Photo 2 */}
                 <div className="h-32 rounded-xl overflow-hidden relative border border-slate-800/50">
                   <img 
-                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&h=200&q=80" 
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&h=200&q=80" 
                     alt="Alta concentrazione senza torcicollo" 
                     className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
@@ -1057,7 +1057,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Book Reference Photo 3 */}
                 <div className="h-32 rounded-xl overflow-hidden relative border border-slate-800/50">
                   <img 
-                    src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=400&h=200&q=80" 
+                    src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&h=200&q=80" 
                     alt="Sonno REM profondo" 
                     className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
@@ -1158,7 +1158,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Same character representing Dr. Marco Wellness */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=600&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop" 
                     alt="Dr. Marco Wellness in camice bianco clinico" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
@@ -1217,16 +1217,6 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 <div>
                   <p className="font-extrabold text-white text-sm">📖 Protocollo Schiena Libera (Metodo Completo in 7 Giorni)</p>
                   <p className="text-xs text-slate-400 mt-0.5">La guida PDF di rapido apprendimento sul rilassamento e l'autopostura discale da ufficio.</p>
-                </div>
-              </div>
-
-              <div className="flex gap-3 items-start border-t border-slate-800/60 pt-3">
-                <div className="bg-violet-600 text-white p-1.5 rounded-lg shrink-0 shadow-md">
-                  <Gift className="w-5.5 h-5.5" />
-                </div>
-                <div>
-                  <p className="font-extrabold text-violet-300 text-sm">🎁 Video Corso Pratico e Illustrazioni HD (Incluso)</p>
-                  <p className="text-xs text-slate-400 mt-0.5">I video-tutorial passo-passo che certificano la perfetta esecuzione per una colonna scarica di fitte.</p>
                 </div>
               </div>
             </div>

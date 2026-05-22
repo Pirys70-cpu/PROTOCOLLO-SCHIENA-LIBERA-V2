@@ -40,7 +40,7 @@ export default function AdminConsole({
   onFireMockEvent,
   onResetDefaults
 }: AdminConsoleProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [pixelInput, setPixelInput] = useState(settings.pixelId);
   const [checkoutUrlInput, setCheckoutUrlInput] = useState(settings.checkoutUrl);
   const [priceInput, setPriceInput] = useState(settings.price.toString());
@@ -99,12 +99,12 @@ export default function AdminConsole({
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white px-4 py-2.5 rounded-full shadow-2xl border border-violet-400/30 cursor-pointer font-medium text-sm transition-all"
+        className="fixed bottom-3 right-3 z-50 flex items-center gap-1.5 bg-slate-900/60 hover:bg-slate-900 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-full shadow-lg border border-slate-700/50 hover:border-violet-500/50 cursor-pointer text-[11px] transition-all opacity-40 hover:opacity-100 backdrop-blur-sm"
         title="Apri Console Amministratore"
         id="btn-open-admin-console"
       >
-        <Settings className="w-4 h-4 animate-spin-slow" />
-        <span>Pannello di Gestione (Admin)</span>
+        <Settings className="w-3.5 h-3.5" />
+        <span className="font-medium">Gestisci</span>
       </motion.button>
     );
   }
