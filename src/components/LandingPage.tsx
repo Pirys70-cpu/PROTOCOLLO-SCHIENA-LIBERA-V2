@@ -1315,12 +1315,12 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
 
         <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
           
-          {/* Visual Banner - Basta soffrire in silenzio */}
+          {/* Visual Banner - Inizia oggi la tua trasformazione */}
           <div className="mb-10 flex justify-center">
             <div className="relative w-full max-w-[680px] rounded-2xl overflow-hidden border border-[#1e1a38] shadow-2xl bg-slate-950">
               <img 
-                src={getDirectImageUrl("https://drive.google.com/file/d/1TlKJyjEEBj5wf1BKYJdkhvYdXkUsU9lh/view?usp=sharing")} 
-                alt="Basta soffrire in silenzio" 
+                src={getDirectImageUrl("https://drive.google.com/file/d/1DHpXEORQGwiBsD4XHEglsJhQaoFlT_FQ/view?usp=sharing")} 
+                alt="Inizia oggi la tua trasformazione" 
                 className="w-full h-auto object-cover opacity-100"
                 referrerPolicy="no-referrer"
               />
