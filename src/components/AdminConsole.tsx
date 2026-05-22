@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Settings, 
@@ -40,6 +40,10 @@ export default function AdminConsole({
   onFireMockEvent,
   onResetDefaults
 }: AdminConsoleProps) {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
   const [pixelInput, setPixelInput] = useState(settings.pixelId);
   const [checkoutUrlInput, setCheckoutUrlInput] = useState(settings.checkoutUrl);
@@ -52,6 +56,102 @@ export default function AdminConsole({
   
   const [showSavedToast, setShowSavedToast] = useState(false);
   const [activeTab, setActiveTab] = useState<'config' | 'pixel' | 'help'>('config');
+
+  // Adhere strictly to requested security constraints
+  const ADMIN_CONFIG = {
+    password: 'MiaPasswordSegreta2024!',
+    keys: { ctrl: true, shift: true, key: 'x' },
+    sessionTime: 300000, // 5 minutes
+    maxAttempts: 2
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.ctrlKey === ADMIN_CONFIG.keys.ctrl &&
+        e.shiftKey === ADMIN_CONFIG.keys.shift &&
+        e.key.toLowerCase() === ADMIN_CONFIG.keys.key.toLowerCase()
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isBlocked) {
+          console.log('🚫 Accesso bloccato per questa sessione');
+          alert('🚫 Accesso bloccato temporaneamente. Troppi tentativi falliti.');
+          return;
+        }
+
+        if (isAuthorized) {
+          setIsAuthorized(false);
+          setIsOpen(false);
+          document.body.removeAttribute('data-admin-active');
+          console.log('🔒 Sessione amministratore terminata');
+          return;
+        }
+
+        const inputPassword = prompt('🔐 Accesso Riservato:');
+
+        if (inputPassword === ADMIN_CONFIG.password) {
+          setIsAuthorized(true);
+          setIsOpen(true);
+          setFailedAttempts(0);
+          document.body.setAttribute('data-admin-active', 'true');
+          console.log('✅ Modalità amministratore attivata');
+        } else {
+          // Password prompt canceled or incorrect
+          if (inputPassword !== null) {
+            setFailedAttempts((prev) => {
+              const next = prev + 1;
+              if (next >= ADMIN_CONFIG.maxAttempts) {
+                setIsBlocked(true);
+                console.log('🚫 Troppi tentativi falliti. Accesso bloccato.');
+                alert('🚫 Troppi tentativi falliti. Accesso bloccato.');
+                
+                // Unblock after 1 hour (3600000ms)
+                setTimeout(() => {
+                  setIsBlocked(false);
+                  setFailedAttempts(0);
+                }, 3600000);
+              } else {
+                alert(`❌ Accesso negato. Tentativi rimasti: ${ADMIN_CONFIG.maxAttempts - next}`);
+              }
+              return next;
+            });
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isAuthorized, isBlocked]);
+
+  // Tab blur safety & session timer constraints
+  useEffect(() => {
+    if (!isAuthorized) return;
+
+    const timer = setTimeout(() => {
+      setIsAuthorized(false);
+      setIsOpen(false);
+      document.body.removeAttribute('data-admin-active');
+      alert('🔒 Sessione scaduta per sicurezza');
+    }, ADMIN_CONFIG.sessionTime);
+
+    const handleBlur = () => {
+      setIsAuthorized(false);
+      setIsOpen(false);
+      document.body.removeAttribute('data-admin-active');
+    };
+
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, [isAuthorized]);
 
   const handleSave = () => {
     const updated: LandingPageSettings = {
@@ -93,15 +193,20 @@ export default function AdminConsole({
     }
   };
 
+  if (!isAuthorized) {
+    return null;
+  }
+
   if (!isOpen) {
     return (
       <motion.button
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-3 right-3 z-50 flex items-center gap-1.5 bg-slate-900/60 hover:bg-slate-900 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-full shadow-lg border border-slate-700/50 hover:border-violet-500/50 cursor-pointer text-[11px] transition-all opacity-40 hover:opacity-100 backdrop-blur-sm"
+        className="fixed bottom-3 right-3 z-50 flex items-center gap-1.5 bg-slate-900/60 hover:bg-slate-900 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-full shadow-lg border border-slate-700/50 hover:border-violet-500/50 cursor-pointer text-[11px] transition-all opacity-40 hover:opacity-100 backdrop-blur-sm gestione-btn"
         title="Apri Console Amministratore"
         id="btn-open-admin-console"
+        data-gestione="true"
       >
         <Settings className="w-3.5 h-3.5" />
         <span className="font-medium">Gestisci</span>
