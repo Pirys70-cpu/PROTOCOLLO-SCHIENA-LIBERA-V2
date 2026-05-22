@@ -413,8 +413,8 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Professional sitting at his office desk experiencing severe back and postural stiffness */}
                 <div className="absolute inset-0">
                   <img 
-                    src={getDirectImageUrl("https://drive.google.com/file/d/1SmrA4Ry7VZK7wnZjv0ivAExK42LsLMfd/view?usp=sharing")} 
-                    alt="Lavoratore stressato con mal di schiena dopo ore al computer" 
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1lqoAbPM_xgiHqJN8htzRX_GMOnoCHX0s/view?usp=sharing")} 
+                    alt="Lavoratore con mal di schiena e stress da ufficio" 
                     className="w-full h-full object-cover opacity-80"
                     referrerPolicy="no-referrer"
                   />
@@ -1172,7 +1172,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {/* Same character representing Dr. Marco Wellness */}
                 <div className="absolute inset-0">
                   <img 
-                    src="https://drive.google.com/file/d/1zN4mcFzWXchdMtGSGfVMhknUmCMSUSGD/view?usp=sharing" 
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1zN4mcFzWXchdMtGSGfVMhknUmCMSUSGD/view?usp=sharing")} 
                     alt="Dr. Marco Wellness in camice bianco clinico" 
                     className="w-full h-full object-cover opacity-85"
                     referrerPolicy="no-referrer"
