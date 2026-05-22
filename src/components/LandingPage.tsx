@@ -34,6 +34,17 @@ interface LandingPageProps {
   onCallToAction: () => void;
 }
 
+// Helper to convert Google Drive share URLs to direct image source URLs
+function getDirectImageUrl(url: string): string {
+  if (url.includes('drive.google.com')) {
+    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://lh3.googleusercontent.com/d/${match[1]}`;
+    }
+  }
+  return url;
+}
+
 // Interactive Quiz Questions
 const QUIZ_QUESTIONS = [
   {
@@ -323,31 +334,34 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
             <div className="lg:col-span-6 relative order-1 lg:order-2 flex justify-center">
               
               {/* Premium Card containing the mock portrait */}
-              <div className="relative w-full max-w-[440px] aspect-square bg-[#0c1226]/90 rounded-2xl overflow-hidden border border-violet-500/25 shadow-2xl p-4 flex flex-col justify-end">
+              <div className="relative w-full max-w-[440px] bg-[#0c1226]/90 rounded-2xl overflow-hidden border border-violet-500/25 shadow-2xl flex flex-col">
                 
-                {/* Visual Backdrop representing the office setting */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10" />
-                
-                {/* The Unsplash asset represents our handsome character inside a bright modern office */}
-                <div className="absolute inset-0">
+                {/* Image compartment: completely un-obscured upper section with taller 4/5 aspect ratio */}
+                <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-950/40">
+                  {/* Subtle vignette/glow behind the image for luxurious deep space feel */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10 pointer-events-none" />
+                  
                   <img 
-                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&h=600&q=80" 
-                    alt="Dr. Marco Wellness - Fisioterapista ed esperto di benessere lombare" 
-                    className="w-full h-full object-cover opacity-85"
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1wzR7EyxtQzZgMf5iBs3Ttpg5FHzdyiXY/view?usp=sharing")} 
+                    alt="Protocollo Schiena Libera - Metodo naturale in 7 giorni" 
+                    className="w-full h-full object-cover opacity-100 hero-image"
+                    style={{ filter: 'brightness(1.08) contrast(1.02)', objectPosition: 'center 15%' }}
                     referrerPolicy="no-referrer"
                   />
                 </div>
 
-                {/* Dr. Presenter badge overlay inside the box */}
-                <div className="relative z-20 w-full bg-slate-950/90 border border-slate-800 p-4 rounded-xl backdrop-blur-md shadow-2xl">
-                  <span className="bg-violet-500/20 text-violet-300 text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full border border-violet-500/30">
-                    Fisioterapista & Ergonomo Certificato
-                  </span>
-                  <h3 className="text-lg font-black text-white leading-tight uppercase font-display mt-2 flex items-center gap-1.5">
+                {/* Info compartment: clearly separated at the bottom to prevent covering the face on any viewport */}
+                <div className="relative z-20 w-full bg-slate-950/95 border-t border-slate-900/60 p-3.5 flex flex-col gap-1.5">
+                  <div>
+                    <span className="inline-block bg-violet-500/20 text-violet-300 text-[8px] uppercase font-extrabold tracking-widest px-2 py-0.5 rounded border border-violet-500/25">
+                      Metodo Naturale Certificato
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-black text-white leading-tight uppercase font-display mt-0.5 flex items-center gap-1">
                     PROTOCOLLO SCHIENA LIBERA
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Il piano strategico da 10 minuti per sciogliere il midollo spinale e le fitte muscolari.
+                  <p className="text-[10px] text-slate-400 leading-normal">
+                    Il piano strategico da 10 minuti per sciogliere la tensione lombare ed eliminare le fitte.
                   </p>
                 </div>
 
