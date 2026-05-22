@@ -198,19 +198,43 @@ export default function AdminConsole({
   }
 
   if (!isOpen) {
+    const gestioneButtonStyle: React.CSSProperties = {
+      position: 'fixed',
+      top: '20px',
+      right: '20px',
+      zIndex: 999999,
+      backgroundColor: '#00ff44', // VERDE ACCESO
+      color: '#000000',           // Testo nero per contrasto
+      border: '3px solid #ffffff',
+      borderRadius: '8px',
+      padding: '12px 20px',
+      fontSize: '14px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      boxShadow: '0 4px 12px rgba(0, 255, 68, 0.4)',
+      transition: 'all 0.3s ease',
+      textTransform: 'uppercase',
+      letterSpacing: '1px',
+      animation: 'pulseAdmin 2s infinite',
+    };
+
     return (
-      <motion.button
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-3 right-3 z-50 flex items-center gap-1.5 bg-slate-900/60 hover:bg-slate-900 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-full shadow-lg border border-slate-700/50 hover:border-violet-500/50 cursor-pointer text-[11px] transition-all opacity-40 hover:opacity-100 backdrop-blur-sm gestione-btn"
-        title="Apri Console Amministratore"
-        id="btn-open-admin-console"
+      <button
+        className="gestione-btn"
         data-gestione="true"
+        style={gestioneButtonStyle}
+        onClick={() => setIsOpen(true)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#00ff00';
+          e.currentTarget.style.transform = 'scale(1.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#00ff44';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
       >
-        <Settings className="w-3.5 h-3.5" />
-        <span className="font-medium">Gestisci</span>
-      </motion.button>
+        🔧 GESTIONE ADMIN
+      </button>
     );
   }
 

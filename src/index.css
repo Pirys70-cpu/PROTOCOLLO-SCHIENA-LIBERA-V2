@@ -31,3 +31,32 @@ body {
   animation: pulseGlow 4s infinite ease-in-out;
 }
 
+/* PROTECTION AND CUSTOM STYLE FOR ADMIN CONTROLS */
+.gestione-btn[data-gestione] {
+  display: none !important;
+}
+
+/* Show only when admin-active is set to true on the body */
+[data-admin-active="true"] .gestione-btn[data-gestione] {
+  display: block !important;
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+}
+
+@keyframes pulseAdmin {
+  0% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(0, 255, 68, 0.4); 
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 6px 20px rgba(0, 255, 68, 0.8); 
+  }
+  100% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(0, 255, 68, 0.4); 
+  }
+}
+
