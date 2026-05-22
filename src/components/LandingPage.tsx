@@ -410,12 +410,12 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
               <div className="relative w-full max-w-[465px] aspect-square rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl group">
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent z-10" />
                 
-                {/* Professional sitting at his office desk experiencing severe back and postural stiffness */}
-                <div className="absolute inset-0">
+                {/* Lavoratore stressato con mal di schiena dopo ore al computer */}
+                <div className="absolute inset-0 bg-slate-950/20">
                   <img 
-                    src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=600&auto=format&fit=crop" 
-                    alt="Professionista con forti dolori posturali e rigidità muscolare alla schiena in ufficio" 
-                    className="w-full h-full object-cover opacity-80"
+                    src={getDirectImageUrl("https://drive.google.com/file/d/1SmrA4Ry7VZK7wnZjv0ivAExK42LsLMfd/view?usp=sharing")} 
+                    alt="Lavoratore stressato con mal di schiena dopo ore al computer" 
+                    className="w-full h-full object-cover opacity-95 hero-image"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -424,10 +424,10 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 <div className="absolute bottom-6 left-6 right-6 z-20 bg-slate-950/95 border border-red-500/30 p-4 rounded-xl shadow-2xl">
                   <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider mb-1">
                     <AlertCircle className="w-4 h-4 text-red-500 animate-bounce" />
-                    <span>Postura statica prolungata</span>
+                    <span>Ti riconosci in questa situazione?</span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Stare seduti provoca uno schiacciamento asimmetrico continuo che disidrata i dischi lombari, bloccando l'afflusso naturale dei liquidi lubrificanti.
+                    Ore e ore davanti al computer... la schiena che si irrigidisce...
                   </p>
                 </div>
               </div>
