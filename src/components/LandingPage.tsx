@@ -1449,7 +1449,6 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
       {/* FOOTER: LEGAL AND CONTACT COMPLIANCES */}
       <footer id="footer-section" className="bg-[#05060f] border-t border-slate-900 py-12 text-slate-500 text-xs mt-auto relative z-20">
         <div className="max-w-6xl mx-auto px-4 space-y-6">
-          src={getDirectImageUrl("https://drive.google.com/file/d/1DHpXEORQGwiBsD4XHEglsJhQaoFlT_FQ/view?usp=sharing")} 
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-900 pb-6">
             <div>
               <span className="text-white font-black text-sm uppercase tracking-widest">
