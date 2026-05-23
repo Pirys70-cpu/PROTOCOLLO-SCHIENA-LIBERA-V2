@@ -1419,9 +1419,9 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                   <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs uppercase">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Il Protocollo
                   </div>
-                  <div className="text-sm font-black text-white">€17 Una Volta Sola</div>
+                  <div className="text-sm font-black text-white">€17 o 3 Rate da €5.67</div>
                   <p className="text-[11px] text-slate-300 leading-normal">
-                    La soluzione naturale, definitiva e discreta da fare a costo zero comodamente a casa tua.
+                    La soluzione naturale, definitiva e discreta. Pagabile anche in 3 rate senza interessi con Klarna o PayPal.
                   </p>
                 </div>
               </div>
@@ -1463,7 +1463,15 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                   Offerta Limitata
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">
+              
+              <div className="py-2">
+                <p className="text-xs sm:text-sm text-slate-200 font-extrabold flex items-center justify-center gap-1.5 bg-slate-900/40 py-2 px-4 rounded-xl border border-slate-800/80 max-w-md mx-auto">
+                  <span className="text-emerald-400 animate-pulse text-base">●</span>
+                  <span>O paga in <strong className="text-amber-400">3 rate da €5.67</strong> senza interessi con Klarna o PayPal</span>
+                </p>
+              </div>
+
+              <p className="text-xs text-slate-400 font-medium pt-1">
                 Paga una sola volta. Nessun rinnovo mensile. Accesso ed aggiornamenti a vita.
               </p>
             </div>
@@ -1528,6 +1536,10 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 {
                   q: "E se mi accorgo che per me non funziona?",
                   a: "La tua serenità è garantita al 100%. Abbiamo inserito una garanzia soddisfatti o rimborsati di 30 giorni consecutivi. Se la tua schiena non risulterà rigenerata ed elastica, inviaci una mail al nostro indirizzo di supporto clinico ed effettueremo il rimborso totale dei €17 senza fare obiezione alcuna."
+                },
+                {
+                  q: "Posso pagare a rate anche se la cifra è molto bassa?",
+                  a: "Sì, assolutamente! Al checkout puoi dividere l'intero importo di €17 in 3 rate da soli €5.67 al mese senza alcun interesse o costo aggiuntivo, selezionando Klarna o PayPal al momento del pagamento."
                 }
               ].map((faq, fIdx) => (
                 <div 
