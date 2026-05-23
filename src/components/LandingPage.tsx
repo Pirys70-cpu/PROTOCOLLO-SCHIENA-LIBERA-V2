@@ -90,62 +90,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
   // Countdown timer state
   const [countdown, setCountdown] = useState({ min: 14, sec: 59, ms: 99 });
 
-  // Real-time visitor counters
-  const [dailyVisitors, setDailyVisitors] = useState<number>(1482);
-  const [totalVisitors, setTotalVisitors] = useState<number>(18241);
 
-  // Ticking and persisting visitor counters
-  useEffect(() => {
-    try {
-      const storedDaily = localStorage.getItem('sl_daily_visitors');
-      const storedTotal = localStorage.getItem('sl_total_visitors');
-
-      let initialDaily = 1482;
-      let initialTotal = 18241;
-
-      if (storedDaily) {
-        const val = parseInt(storedDaily, 10);
-        if (!isNaN(val)) {
-          initialDaily = val + Math.floor(Math.random() * 4) + 1;
-        }
-      } else {
-        initialDaily = 1480 + Math.floor(Math.random() * 50);
-      }
-
-      if (storedTotal) {
-        const val = parseInt(storedTotal, 10);
-        if (!isNaN(val)) {
-          initialTotal = val + Math.floor(Math.random() * 8) + 2;
-        }
-      } else {
-        initialTotal = 18220 + Math.floor(Math.random() * 200);
-      }
-
-      setDailyVisitors(initialDaily);
-      setTotalVisitors(initialTotal);
-      localStorage.setItem('sl_daily_visitors', initialDaily.toString());
-      localStorage.setItem('sl_total_visitors', initialTotal.toString());
-    } catch (e) {}
-
-    const interval = setInterval(() => {
-      const dailyInc = Math.random() > 0.45 ? 1 : 0;
-      const totalInc = Math.floor(Math.random() * 2) + (Math.random() > 0.71 ? 1 : 0);
-
-      setDailyVisitors(prev => {
-        const next = prev + dailyInc;
-        try { localStorage.setItem('sl_daily_visitors', next.toString()); } catch (e) {}
-        return next;
-      });
-
-      setTotalVisitors(prev => {
-        const next = prev + totalInc;
-        try { localStorage.setItem('sl_total_visitors', next.toString()); } catch (e) {}
-        return next;
-      });
-    }, 5000 + Math.random() * 3000);
-
-    return () => clearInterval(interval);
-  }, []);
   
   // Quiz states
   const [quizStep, setQuizStep] = useState<number>(0); // 0 = not started, 1, 2, 3 = questions, 4 = showing calculated score
@@ -350,20 +295,6 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                     <span><strong>Illustrazioni HD:</strong> Schemi chiari e spiegazioni anatomiche precise e semplici.</span>
                   </li>
                 </ul>
-
-                <div className="h-[1px] bg-slate-800/80" />
-
-                {/* 👥 REAL-TIME CLASSY VISITOR COUNTER */}
-                <div className="bg-slate-950/40 border border-slate-900/50 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-[11px] font-mono text-slate-400">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                    <span>Visitatori online oggi: <strong className="text-white font-black">{dailyVisitors.toLocaleString()}</strong></span>
-                  </div>
-                  <div className="hidden sm:block h-3 w-[1px] bg-slate-800 shrink-0" />
-                  <div className="flex items-center gap-1.5">
-                    <span>Totale lettori attivi: <strong className="text-violet-400 font-black">{totalVisitors.toLocaleString()}</strong></span>
-                  </div>
-                </div>
 
                 <div className="h-[1px] bg-slate-800/80" />
 
@@ -1537,24 +1468,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 </div>
               </div>
               
-              {/* 👥 REAL-TIME CLASSY BOT VISITORS COUNTERS */}
-              <div className="bg-slate-950/60 border border-slate-850/80 rounded-2xl p-4 max-w-md mx-auto space-y-2.5 text-left shadow-inner">
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Lavoratori attivi sul sito oggi:</span>
-                  </div>
-                  <strong className="text-white font-black">{dailyVisitors.toLocaleString()}</strong>
-                </div>
-                <div className="h-[1px] bg-slate-900" />
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
-                    <span>Totale lettori del Protocollo:</span>
-                  </div>
-                  <strong className="text-violet-400 font-black">{totalVisitors.toLocaleString()}</strong>
-                </div>
-              </div>
+
 
               <div className="py-2">
                 <p className="text-xs sm:text-sm text-slate-200 font-extrabold flex items-center justify-center gap-1.5 bg-slate-900/40 py-2 px-4 rounded-xl border border-slate-800/80 max-w-md mx-auto">
