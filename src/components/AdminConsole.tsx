@@ -66,6 +66,53 @@ export default function AdminConsole({
   };
 
   useEffect(() => {
+    const triggerConsole = () => {
+      if (isBlocked) {
+        console.log('🚫 Accesso bloccato per questa sessione');
+        alert('🚫 Accesso bloccato temporaneamente. Troppi tentativi falliti.');
+        return;
+      }
+
+      if (isAuthorized) {
+        setIsAuthorized(false);
+        setIsOpen(false);
+        document.body.removeAttribute('data-admin-active');
+        console.log('🔒 Sessione amministratore terminata');
+        return;
+      }
+
+      const inputPassword = prompt('🔐 Accesso Riservato:');
+
+      if (inputPassword === ADMIN_CONFIG.password) {
+        setIsAuthorized(true);
+        setIsOpen(true);
+        setFailedAttempts(0);
+        document.body.setAttribute('data-admin-active', 'true');
+        console.log('✅ Modalità amministratore attivata');
+      } else {
+        // Password prompt canceled or incorrect
+        if (inputPassword !== null) {
+          setFailedAttempts((prev) => {
+            const next = prev + 1;
+            if (next >= ADMIN_CONFIG.maxAttempts) {
+              setIsBlocked(true);
+              console.log('🚫 Troppi tentativi falliti. Accesso bloccato.');
+              alert('🚫 Troppi tentativi falliti. Accesso bloccato.');
+              
+              // Unblock after 1 hour (3600000ms)
+              setTimeout(() => {
+                setIsBlocked(false);
+                setFailedAttempts(0);
+              }, 3600000);
+            } else {
+              alert(`❌ Accesso negato. Tentativi rimasti: ${ADMIN_CONFIG.maxAttempts - next}`);
+            }
+            return next;
+          });
+        }
+      }
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         e.ctrlKey === ADMIN_CONFIG.keys.ctrl &&
@@ -74,57 +121,19 @@ export default function AdminConsole({
       ) {
         e.preventDefault();
         e.stopPropagation();
-
-        if (isBlocked) {
-          console.log('🚫 Accesso bloccato per questa sessione');
-          alert('🚫 Accesso bloccato temporaneamente. Troppi tentativi falliti.');
-          return;
-        }
-
-        if (isAuthorized) {
-          setIsAuthorized(false);
-          setIsOpen(false);
-          document.body.removeAttribute('data-admin-active');
-          console.log('🔒 Sessione amministratore terminata');
-          return;
-        }
-
-        const inputPassword = prompt('🔐 Accesso Riservato:');
-
-        if (inputPassword === ADMIN_CONFIG.password) {
-          setIsAuthorized(true);
-          setIsOpen(true);
-          setFailedAttempts(0);
-          document.body.setAttribute('data-admin-active', 'true');
-          console.log('✅ Modalità amministratore attivata');
-        } else {
-          // Password prompt canceled or incorrect
-          if (inputPassword !== null) {
-            setFailedAttempts((prev) => {
-              const next = prev + 1;
-              if (next >= ADMIN_CONFIG.maxAttempts) {
-                setIsBlocked(true);
-                console.log('🚫 Troppi tentativi falliti. Accesso bloccato.');
-                alert('🚫 Troppi tentativi falliti. Accesso bloccato.');
-                
-                // Unblock after 1 hour (3600000ms)
-                setTimeout(() => {
-                  setIsBlocked(false);
-                  setFailedAttempts(0);
-                }, 3600000);
-              } else {
-                alert(`❌ Accesso negato. Tentativi rimasti: ${ADMIN_CONFIG.maxAttempts - next}`);
-              }
-              return next;
-            });
-          }
-        }
+        triggerConsole();
       }
     };
 
+    const handleCustomEvent = () => {
+      triggerConsole();
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-admin-console', handleCustomEvent);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-admin-console', handleCustomEvent);
     };
   }, [isAuthorized, isBlocked]);
 

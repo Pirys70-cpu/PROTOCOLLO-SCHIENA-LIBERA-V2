@@ -1670,7 +1670,24 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
         <div className="max-w-6xl mx-auto px-4 space-y-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-900 pb-6">
             <div>
-              <span className="text-white font-black text-sm uppercase tracking-widest">
+              <span 
+                className="text-white font-black text-sm uppercase tracking-widest cursor-pointer select-none"
+                title="Gestione"
+                onClick={() => {
+                  const now = Date.now();
+                  const win = window as any;
+                  if (!win._tapTimer || now - win._tapTimer > 2500) {
+                    win._taps = 1;
+                  } else {
+                    win._taps = (win._taps || 0) + 1;
+                  }
+                  win._tapTimer = now;
+                  if (win._taps >= 5) {
+                    win._taps = 0;
+                    window.dispatchEvent(new CustomEvent('open-admin-console'));
+                  }
+                }}
+              >
                 PROTOCOLLO SCHIENA LIBERA
               </span>
               <p className="text-[11px] text-slate-500 mt-1">
