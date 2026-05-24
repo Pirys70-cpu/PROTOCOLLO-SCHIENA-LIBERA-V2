@@ -38,11 +38,38 @@ body {
 
 /* Show only when admin-active is set to true on the body */
 [data-admin-active="true"] .gestione-btn[data-gestione] {
-  display: block !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
   position: fixed !important;
-  top: 20px !important;
-  right: 20px !important;
+  bottom: 24px !important;
+  right: 24px !important;
   z-index: 999999 !important;
+  background-color: #00ff44 !important;
+  color: #000000 !important;
+  border: 3px solid #ffffff !important;
+  border-radius: 9999px !important;
+  padding: 12px 24px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 0 10px 25px rgba(0, 255, 68, 0.5), 0 0 10px rgba(255, 255, 255, 0.4) !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  user-select: none !important;
+  animation: pulseAdmin 2s infinite !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+[data-admin-active="true"] .gestione-btn[data-gestione]:hover {
+  background-color: #00e63e !important;
+  transform: scale(1.05) translateY(-2px) !important;
+}
+
+[data-admin-active="true"] .gestione-btn[data-gestione]:active {
+  transform: scale(0.95) !important;
 }
 
 @keyframes pulseAdmin {

@@ -77,10 +77,8 @@ export default function AdminConsole({
       }
 
       if (isAuthorized) {
-        setIsAuthorized(false);
-        setIsOpen(false);
-        document.body.removeAttribute('data-admin-active');
-        console.log('🔒 Sessione amministratore terminata');
+        setIsOpen(prev => !prev);
+        console.log('🔄 Toggle pannello controllo:', !isOpen);
         return;
       }
 
@@ -140,7 +138,7 @@ export default function AdminConsole({
     };
   }, [isAuthorized, isBlocked]);
 
-  // Tab blur safety & session timer constraints
+  // Tab session timer constraints (no blur reset for sandboxed iframe safety)
   useEffect(() => {
     if (!isAuthorized) return;
 
@@ -151,17 +149,20 @@ export default function AdminConsole({
       alert('🔒 Sessione scaduta per sicurezza');
     }, ADMIN_CONFIG.sessionTime);
 
-    const handleBlur = () => {
-      setIsAuthorized(false);
-      setIsOpen(false);
-      document.body.removeAttribute('data-admin-active');
-    };
-
-    window.addEventListener('blur', handleBlur);
-
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('blur', handleBlur);
+    };
+  }, [isAuthorized]);
+
+  // Synchronize body attribute with authorized state
+  useEffect(() => {
+    if (isAuthorized) {
+      document.body.setAttribute('data-admin-active', 'true');
+    } else {
+      document.body.removeAttribute('data-admin-active');
+    }
+    return () => {
+      document.body.removeAttribute('data-admin-active');
     };
   }, [isAuthorized]);
 
@@ -209,105 +210,99 @@ export default function AdminConsole({
     return null;
   }
 
-  if (!isOpen) {
-    const gestioneButtonStyle: React.CSSProperties = {
-      position: 'fixed',
-      top: '20px',
-      right: '20px',
-      zIndex: 999999,
-      backgroundColor: '#00ff44', // VERDE ACCESO
-      color: '#000000',           // Testo nero per contrasto
-      border: '3px solid #ffffff',
-      borderRadius: '8px',
-      padding: '12px 20px',
-      fontSize: '14px',
-      fontWeight: 'bold',
-      cursor: 'pointer',
-      boxShadow: '0 4px 12px rgba(0, 255, 68, 0.4)',
-      transition: 'all 0.3s ease',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
-      animation: 'pulseAdmin 2s infinite',
-    };
-
-    return (
+  return (
+    <>
+      {/* Bottoniera Floating Azione - Sempre visibile quando si è autorizzati */}
       <button
         className="gestione-btn"
         data-gestione="true"
-        style={gestioneButtonStyle}
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
         onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = '#00ff00';
+          e.currentTarget.style.backgroundColor = '#00e63e';
           e.currentTarget.style.transform = 'scale(1.05)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.backgroundColor = '#00ff44';
           e.currentTarget.style.transform = 'scale(1)';
         }}
+        title="Apri o chiudi il pannello di controllo dell'amministratore"
       >
-        🔧 GESTIONE ADMIN
+        <span>🔧</span>
+        <span>{isOpen ? 'Chiudi Strumenti' : 'Gestione Admin'}</span>
       </button>
-    );
-  }
 
-  return (
-    <div id="admin-management-block" className="relative z-50 w-full bg-slate-900 border-b border-violet-500/30 text-slate-100 shadow-2xl">
-      <div className="max-w-7xl mx-auto px-4 py-3">
-        {/* Header Console */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-800">
-          <div className="flex items-center gap-2.5">
-            <div className="bg-gradient-to-tr from-violet-500 to-purple-500 p-1.5 rounded-lg text-white shadow-md">
-              <Sliders className="w-5 h-5" />
+      {/* Pannello Superiore Console di Controllo */}
+      {isOpen && (
+        <div id="admin-management-block" className="relative z-50 w-full bg-slate-900 border-b border-violet-500/30 text-slate-100 shadow-2xl">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            {/* Header Console */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="bg-gradient-to-tr from-violet-500 to-purple-500 p-1.5 rounded-lg text-white shadow-md">
+                  <Sliders className="w-5 h-5" />
+                </div>
+                <div>
+                  <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
+                    CONSOLE STRUMENTI EDITORE <span className="bg-violet-500/20 text-violet-300 text-[10px] uppercase font-mono px-2 py-0.5 rounded-full border border-violet-500/30">Attiva</span>
+                  </h1>
+                  <p className="text-xs text-slate-400">
+                    Pannello per cambiare pixel di Meta, link di Hotmart ed eventi in tempo reale. <span className="text-amber-400 font-medium">Questa barra scompare per i tuoi clienti!</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setActiveTab('config')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'config' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  Configurazione Dati
+                </button>
+                <button
+                  onClick={() => setActiveTab('pixel')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === 'pixel' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  <Terminal className="w-3.5 h-3.5" />
+                  Test Pixel Meta ({pixelEvents.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('help')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'help' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  Come funziona?
+                </button>
+
+                <div className="h-6 w-[1px] bg-slate-800 mx-1 hidden md:block"></div>
+
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="px-3 py-1.5 text-xs font-semibold text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/20 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                  title="Nasconde questo pannello per vedere l'esatta vista del cliente"
+                >
+                  <EyeOff className="w-3.5 h-3.5" />
+                  Anteprima Cliente
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (window.confirm("Sei sicuro di voler uscire completamente dalla modalità amministratore?")) {
+                      setIsAuthorized(false);
+                      setIsOpen(false);
+                    }
+                  }}
+                  className="px-3 py-1.5 text-xs font-bold text-rose-300 bg-rose-950/40 hover:bg-rose-900/40 border border-rose-500/20 rounded-lg transition-all flex items-center gap-1 cursor-pointer"
+                  title="Effettua il logout di sicurezza"
+                >
+                  🔒 Esci
+                </button>
+              </div>
             </div>
-            <div>
-              <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                CONSOLE STRUMENTI EDITORE <span className="bg-violet-500/20 text-violet-300 text-[10px] uppercase font-mono px-2 py-0.5 rounded-full border border-violet-500/30">Attiva</span>
-              </h1>
-              <p className="text-xs text-slate-400">
-                Pannello per cambiare pixel di Meta, link di Hotmart ed eventi in tempo reale. <span className="text-amber-400 font-medium">Questa barra scompare per i tuoi clienti!</span>
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setActiveTab('config')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                activeTab === 'config' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              Configurazione Dati
-            </button>
-            <button
-              onClick={() => setActiveTab('pixel')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'pixel' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              <Terminal className="w-3.5 h-3.5" />
-              Test Pixel Meta ({pixelEvents.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('help')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                activeTab === 'help' ? 'bg-violet-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              Come funziona?
-            </button>
-
-            <div className="h-6 w-[1px] bg-slate-800 mx-1Hidden md:block"></div>
-
-            <button
-              onClick={() => setIsOpen(false)}
-              className="px-3 py-1.5 text-xs font-semibold text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/20 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
-              title="Nasconde questo pannello per vedere l'esatta vista del cliente"
-            >
-              <EyeOff className="w-3.5 h-3.5" />
-              Anteprima Cliente
-            </button>
-          </div>
-        </div>
 
         {/* Tab Contents */}
         <div className="py-4">
@@ -642,5 +637,7 @@ export default function AdminConsole({
         </div>
       </div>
     </div>
+  )}
+</>
   );
 }
