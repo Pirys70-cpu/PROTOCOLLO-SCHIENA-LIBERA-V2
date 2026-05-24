@@ -24,6 +24,8 @@ import {
 import { LandingPageSettings, PixelEvent } from '../types';
 
 interface AdminConsoleProps {
+  isAuthorized: boolean;
+  setIsAuthorized: (auth: boolean) => void;
   settings: LandingPageSettings;
   setSettings: (settings: LandingPageSettings) => void;
   pixelEvents: PixelEvent[];
@@ -33,6 +35,8 @@ interface AdminConsoleProps {
 }
 
 export default function AdminConsole({
+  isAuthorized,
+  setIsAuthorized,
   settings,
   setSettings,
   pixelEvents,
@@ -40,7 +44,6 @@ export default function AdminConsole({
   onFireMockEvent,
   onResetDefaults
 }: AdminConsoleProps) {
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [isBlocked, setIsBlocked] = useState(false);
 

@@ -22,6 +22,7 @@ const DEFAULTS: LandingPageSettings = {
 };
 
 export default function App() {
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [settings, setSettings] = useState<LandingPageSettings>(() => {
     try {
       const saved = localStorage.getItem('schiena_libera_settings');
@@ -148,6 +149,8 @@ export default function App() {
       
       {/* 1. TOP ADMIN CONSOLE BLOCK (Rendered according to conditional preference) */}
       <AdminConsole
+        isAuthorized={isAuthorized}
+        setIsAuthorized={setIsAuthorized}
         settings={settings}
         setSettings={setSettings}
         pixelEvents={pixelEvents}
@@ -158,6 +161,7 @@ export default function App() {
 
       {/* 2. THE HIGH CONVERTING SALES LANDING PAGE */}
       <LandingPage
+        isAuthorized={isAuthorized}
         settings={settings}
         onCallToAction={handleCheckoutRedirect}
       />

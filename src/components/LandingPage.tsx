@@ -16,6 +16,7 @@ import {
   Smartphone,
   CheckCircle2,
   Lock,
+  Settings,
   MessageSquare,
   Gift,
   Mail,
@@ -30,6 +31,7 @@ import {
 import { LandingPageSettings } from '../types';
 
 interface LandingPageProps {
+  isAuthorized: boolean;
   settings: LandingPageSettings;
   onCallToAction: () => void;
 }
@@ -83,7 +85,7 @@ const PURCHASES_LOG = [
   { name: "Chiara da Firenze", action: "ha attivato la garanzia soddisfatti o rimborsati", time: "8 min fa" }
 ];
 
-export default function LandingPage({ settings, onCallToAction }: LandingPageProps) {
+export default function LandingPage({ isAuthorized, settings, onCallToAction }: LandingPageProps) {
   // Destructure dynamic configurations
   const { price, originalPrice, spotsLeft, supportEmail, supportWhatsapp } = settings;
 
@@ -1163,6 +1165,25 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
             </div>
 
           </div>
+
+          {/* Pulsante Verde Gestione Admin dopo il punto 3 */}
+          {isAuthorized && (
+            <div className="mt-8 mb-4 flex flex-col items-center justify-center">
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('open-admin-console'));
+                }}
+                className="px-6 py-3.5 bg-[#00ff44] text-black font-black text-sm uppercase tracking-wider rounded-xl border-2 border-white/95 shadow-[0_4px_20px_rgba(0,255,68,0.5)] hover:bg-[#00e63e] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-2 cursor-pointer select-none"
+                title="Apri console di gestione"
+              >
+                <Settings className="w-5 h-5 text-black" />
+                Gestione Admin
+              </button>
+              <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-2">
+                Accesso riservato all'amministratore del sito
+              </p>
+            </div>
+          )}
 
           {/* Refund guarantee verification strip */}
           <div className="mt-10 bg-gradient-to-r from-[#0d152a] to-[#16122b] border-2 border-dashed border-violet-500/30 rounded-2xl p-6 text-center max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4 justify-center shadow-xl">
