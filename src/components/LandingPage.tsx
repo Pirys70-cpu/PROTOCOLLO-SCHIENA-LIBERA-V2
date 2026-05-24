@@ -87,6 +87,8 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
   // Destructure dynamic configurations
   const { price, originalPrice, spotsLeft, supportEmail, supportWhatsapp } = settings;
 
+  const discountPercent = originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
   // Countdown timer state
   const [countdown, setCountdown] = useState({ min: 14, sec: 59, ms: 99 });
 
@@ -305,7 +307,7 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                     <span className="text-white text-3xl font-black tracking-tight flex items-center gap-2">
                       Solo €{price}
                       <span className="bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] px-2 py-0.5 uppercase font-bold rounded">
-                        SCONTO 80%
+                        SCONTO {discountPercent}%
                       </span>
                     </span>
                   </div>

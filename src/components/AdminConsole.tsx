@@ -159,7 +159,7 @@ export default function AdminConsole({
       pixelId: pixelInput.trim(),
       checkoutUrl: checkoutUrlInput.trim(),
       price: parseFloat(priceInput) || 17,
-      originalPrice: parseFloat(origPriceInput) || 87,
+      originalPrice: parseFloat(origPriceInput) || 47,
       spotsTotal: parseInt(spotsTotalInput) || 100,
       spotsLeft: parseInt(spotsLeftInput) || 24,
       supportEmail: supportEmailInput.trim(),
@@ -184,7 +184,7 @@ export default function AdminConsole({
       setPixelInput("");
       setCheckoutUrlInput("https://pay.hotmart.com/Q105934024P?checkoutMode=10");
       setPriceInput("17");
-      setOrigPriceInput("87");
+      setOrigPriceInput("47");
       setSpotsTotalInput("100");
       setSpotsLeftInput("24");
       setSupportEmailInput("aaragon70@gmail.com");

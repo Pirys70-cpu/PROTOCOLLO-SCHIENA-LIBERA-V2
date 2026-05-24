@@ -9,7 +9,7 @@ const DEFAULTS: LandingPageSettings = {
   pixelId: '', // Default blank to let user insert theirs
   checkoutUrl: 'https://pay.hotmart.com/Q105934024P?checkoutMode=10',
   price: 17,
-  originalPrice: 87,
+  originalPrice: 47,
   productName: 'Protocollo Schiena Libera',
   authorName: 'Dr. Marco Wellness',
   spotsTotal: 100,
@@ -26,7 +26,13 @@ export default function App() {
     try {
       const saved = localStorage.getItem('schiena_libera_settings');
       if (saved) {
-        return { ...DEFAULTS, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        // Migrate old 87 default to 47
+        if (parsed.originalPrice === 87) {
+          parsed.originalPrice = 47;
+          localStorage.setItem('schiena_libera_settings', JSON.stringify(parsed));
+        }
+        return { ...DEFAULTS, ...parsed };
       }
     } catch (e) {
       console.error('Failed to parse saved settings', e);
