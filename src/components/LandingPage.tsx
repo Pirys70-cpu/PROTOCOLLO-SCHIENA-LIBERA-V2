@@ -349,16 +349,64 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                 
                 {/* Image compartment: completely un-obscured upper section with taller 4/5 aspect ratio */}
                 <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-950/40">
-                  {/* Subtle vignette/glow behind the image for luxurious deep space feel */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10 pointer-events-none" />
-                  
-                  <img 
-                    src={getDirectImageUrl("https://drive.google.com/file/d/14Rl-KGv5m1qFs5_yEJns7L0TLUwytbpb/view?usp=sharing")} 
-                    alt="Protocollo Schiena Libera - Metodo naturale in 7 giorni" 
-                    className="w-full h-full object-cover opacity-100 hero-image"
-                    style={{ filter: 'brightness(1.08) contrast(1.02)', objectPosition: 'center 15%' }}
-                    referrerPolicy="no-referrer"
-                  />
+                  {/* Beautiful, responsive vector HTML/CSS mockup of the Version 2.0 Book Cover */}
+                  <div className="w-full h-full flex flex-col justify-between bg-[#ecf2fa] text-white select-none relative">
+                    
+                    {/* UPPER PORTION: Elegant neon deep violet, magenta, and blue gradient tech light-leak */}
+                    <div className="relative h-[44%] flex flex-col justify-center items-center text-center p-3 sm:p-4 overflow-hidden border-b border-violet-500/20 bg-gradient-to-r from-blue-700 via-fuchsia-600 to-indigo-800">
+                      {/* Sub-reflective details */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10 mix-blend-overlay" />
+                      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#11162d]/20 to-transparent z-1" />
+                      
+                      {/* Subtle horizontal laser flare */}
+                      <div className="absolute top-[48%] left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-pink-300/40 to-transparent pointer-events-none opacity-50 blur-[0.5px]" />
+                      
+                      <div className="relative z-10 text-center flex flex-col items-center">
+                        <h2 className="text-[1.35rem] sm:text-2xl md:text-3xl font-black font-sans tracking-wider text-white uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.61)]">
+                          PROTOCOLLO
+                        </h2>
+                        <h1 className="text-2xl sm:text-3xl md:text-[2.25rem] font-black font-sans tracking-tight text-white uppercase leading-none drop-shadow-[0_2px_6px_rgba(0,0,0,0.72)] mt-0.5 scale-y-105">
+                          SCHIENA LIBERA
+                        </h1>
+                        <p className="text-[8px] sm:text-[10px] md:text-xs font-sans font-extrabold text-[#fdf2f8] tracking-widest pt-2 opacity-95 uppercase">
+                          Metodo naturale in 7 giorni
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* LOWER PORTION: Dr. Marco Cover Photo & Text Badge */}
+                    <div className="relative h-[56%] bg-[#ecf2fa] overflow-hidden flex items-end">
+                      
+                      {/* Floating Badge VERSIONE 2.0 in the upper-right of the lower section */}
+                      <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-20 bg-[#0d1c3a] text-white border-2 border-white/90 rounded-full px-2 py-1 sm:px-3 sm:py-2.5 shadow-lg flex flex-col items-center justify-center leading-none">
+                        <span className="text-[5px] sm:text-[6px] font-black tracking-widest text-blue-200 uppercase">VERSIONE</span>
+                        <span className="text-[10px] sm:text-xs font-black tracking-tight text-yellow-300 mt-0.5">2.0</span>
+                      </div>
+
+                      {/* Man stretching against the wall/pillar (Unsplash image matching the user's uploaded photo layout perfectly) */}
+                      <img
+                        src="https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=800&q=80"
+                        alt="Uomo che si allunga contro la parete"
+                        className="absolute right-0 bottom-0 h-full w-[58%] object-cover object-center z-10"
+                        style={{ filter: 'brightness(1.06) contrast(1.01)' }}
+                        referrerPolicy="no-referrer"
+                      />
+
+                      {/* Smooth shadow overlap */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#ecf2fa] via-[#ecf2fa]/95 to-transparent z-5 pointer-events-none" />
+
+                      {/* High-impact promise statement in bottom-left */}
+                      <div className="absolute left-3.5 bottom-3.5 w-[50%] z-15 text-left">
+                        <p className="text-[9px] sm:text-[11px] md:text-sm font-black text-[#0c2a66] leading-snug uppercase font-sans tracking-wide">
+                          Liberati <br />
+                          dal dolore <br />
+                          e dalla rigidità <br />
+                          <span className="text-[#8b5cf6] font-black underline decoration-pink-500/50 decoration-2">senza farmaci</span>
+                        </p>
+                      </div>
+                    </div>
+                    
+                  </div>
                 </div>
 
                 {/* Info compartment: clearly separated at the bottom to prevent covering the face on any viewport */}
