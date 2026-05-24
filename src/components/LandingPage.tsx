@@ -383,10 +383,10 @@ export default function LandingPage({ settings, onCallToAction }: LandingPagePro
                         <span className="text-[10px] sm:text-xs font-black tracking-tight text-yellow-300 mt-0.5">2.0</span>
                       </div>
 
-                      {/* Man stretching against the wall/pillar (Unsplash image matching the user's uploaded photo layout perfectly) */}
+                      {/* Man stretching against the wall/pillar (User uploaded photo) */}
                       <img
-                        src="https://images.unsplash.com/photo-1600881333168-2ef49b341f30?auto=format&fit=crop&w=800&q=80"
-                        alt="Uomo che si allunga contro la parete"
+                        src={getDirectImageUrl("https://drive.google.com/file/d/15cKrIKPm8P2hVCeenS3BGv5x6dmyPGyj/view?usp=drivesdk")}
+                        alt="Uomo che si allunga"
                         className="absolute right-0 bottom-0 h-full w-[58%] object-cover object-center z-10"
                         style={{ filter: 'brightness(1.06) contrast(1.01)' }}
                         referrerPolicy="no-referrer"
