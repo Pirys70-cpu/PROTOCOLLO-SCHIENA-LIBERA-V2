@@ -78,7 +78,7 @@ const QUIZ_QUESTIONS = [
 // Live notifications list
 const PURCHASES_LOG = [
   { name: "Fabio da Roma", action: "ha sbloccato la schiena con il Protocollo PDF", time: "2 min fa" },
-  { name: "Valentina da Milano", action: "ha acquistato l'offerta a soli €17", time: "In questo momento!" },
+  { name: "Valentina da Milano", action: "ha acquistato l'offerta a prezzo speciale", time: "In questo momento!" },
   { name: "Alessandro da Bologna", action: "ha scaricato il manuale PDF d'ufficio", time: "1 min fa" },
   { name: "Elena da Torino", action: "ha appena completato la routine di 10 minuti", time: "4 min fa" },
   { name: "Giuseppe da Napoli", action: "ha scelto l'accesso digitale sicuro", time: "6 min fa" },
@@ -202,7 +202,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
             <span className="inline-flex w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
             <span className="uppercase tracking-widest font-black text-[10px] bg-red-600 px-2 py-0.5 rounded text-white animate-pulse">OFFERTA LIMITATA</span>
             <span className="text-[11px] sm:text-xs">
-              Attenzione: il prezzo promozionale di <strong className="text-yellow-300">€17</strong> riserverà l'accesso solo per pochi minuti!
+              Attenzione: il prezzo promozionale di <strong className="text-yellow-300">€{price}</strong> riserverà l'accesso solo per pochi minuti!
             </span>
           </div>
 
@@ -674,7 +674,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
                     className="bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-xs font-black uppercase tracking-wider py-3 px-6 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-lg border-b-2 border-yellow-600 font-sans"
                     id="btn-quiz-cta"
                   >
-                    <span>Ottieni il Protocollo (€17)</span>
+                    <span>Ottieni il Protocollo (€{price})</span>
                     <ChevronRight className="w-4.5 h-4.5 stroke-[3px]" />
                   </button>
                 </div>
@@ -1195,7 +1195,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
                 SODDISFATTO O RIMBORSATO AL 100% SENZA OBIEZIONI
               </p>
               <p className="text-xs sm:text-sm text-slate-400 text-center sm:text-left mt-0.5">
-                Segui il Protocollo per 7 giorni. Se non avverti una schiena elastica e decondizionata dal dolore, invia una mail ed ottieni il rimborso instantaneo dei tuoi €17.
+                Segui il Protocollo per 7 giorni. Se non avverti una schiena elastica e decondizionata dal dolore, invia una mail ed ottieni il rimborso instantaneo dei tuoi €{price}.
               </p>
             </div>
           </div>
@@ -1453,7 +1453,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
 
               <div className="pt-2 border-t border-slate-800 text-center">
                 <p className="text-xs text-slate-350">
-                  Prezzo Standard: <span className="line-through text-slate-500 font-extrabold">€47.00</span> • Oggi sblocchi l'accesso a soli <span className="text-amber-400 font-black text-sm">€17.00!</span>
+                  Prezzo Standard: <span className="line-through text-slate-500 font-extrabold font-mono">€{originalPrice}.00</span> • Oggi sblocchi l'accesso a soli <span className="text-amber-400 font-black text-sm">€{price}.00!</span>
                 </p>
               </div>
             </div>
@@ -1492,7 +1492,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
                   <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs uppercase">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Il Protocollo
                   </div>
-                  <div className="text-sm font-black text-white">€17 o 3 Rate da €5.67</div>
+                  <div className="text-sm font-black text-white">€{price} o 3 Rate da €{(price / 3).toFixed(2)}</div>
                   <p className="text-[11px] text-slate-300 leading-normal">
                     La soluzione naturale, definitiva e discreta. Pagabile anche in 3 rate senza interessi con Klarna o PayPal.
                   </p>
@@ -1521,7 +1521,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
                     <Check className="w-4 h-4 text-emerald-400 shrink-0 stroke-[3px]" /> Strada B (Agire a Rischio Zero):
                   </div>
                   <p className="leading-relaxed">
-                    Investire <strong>€17</strong> oggi (meno di una pizza con gli amici), sbloccare il protocollo a vita, ritrovare una schiena flessibile ed elastica, coperto dalla garanzia soddisfatti o rimborsati.
+                    Investire <strong>€{price}</strong> oggi (meno di una pizza con gli amici), sbloccare il protocollo a vita, ritrovare una schiena flessibile ed elastica, coperto dalla garanzia soddisfatti o rimborsati.
                   </p>
                 </div>
               </div>
@@ -1544,7 +1544,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
               <div className="py-2">
                 <p className="text-xs sm:text-sm text-slate-200 font-extrabold flex items-center justify-center gap-1.5 bg-slate-900/40 py-2 px-4 rounded-xl border border-slate-800/80 max-w-md mx-auto">
                   <span className="text-emerald-400 animate-pulse text-base">●</span>
-                  <span>O paga in <strong className="text-amber-400">3 rate da €5.67</strong> senza interessi con Klarna o PayPal</span>
+                  <span>O paga in <strong className="text-amber-400">3 rate da €{(price / 3).toFixed(2)}</strong> senza interessi con Klarna o PayPal</span>
                 </p>
               </div>
 
@@ -1607,16 +1607,16 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
                   a: "Fai tutto in soli 10 minuti complessivi. Le routine sono velocissime ed alcune possono essere tranquillamente eseguite in modo 'invisibile' direttamente in sedia alla scrivania senza che i colleghi o superiori se ne accorgano."
                 },
                 {
-                  q: "Come avviene l'acquisto dei €17 e come ricevo il manuale?",
+                  q: `Come avviene l'acquisto dei €${price} e come ricevo il manuale?`,
                   a: "L'erogazione è totalmente istantanea. Subito dopo aver effettuato il pagamento protetto a 256-bit, riceverai una mail di conferma contenente il link per il download immediato della guida PDF."
                 },
                 {
                   q: "E se mi accorgo che per me non funziona?",
-                  a: "La tua serenità è garantita al 100%. Abbiamo inserito una garanzia soddisfatti o rimborsati di 30 giorni consecutivi. Se la tua schiena non risulterà rigenerata ed elastica, inviaci una mail al nostro indirizzo di supporto clinico ed effettueremo il rimborso totale dei €17 senza fare obiezione alcuna."
+                  a: `La tua serenità è garantita al 100%. Abbiamo inserito una garanzia soddisfatti o rimborsati di 30 giorni consecutivi. Se la tua schiena non risulterà rigenerata ed elastica, inviaci una mail al nostro indirizzo di supporto clinico ed effettueremo il rimborso totale dei €${price} senza fare obiezione alcuna.`
                 },
                 {
                   q: "Posso pagare a rate anche se la cifra è molto bassa?",
-                  a: "Sì, assolutamente! Al checkout puoi dividere l'intero importo di €17 in 3 rate da soli €5.67 al mese senza alcun interesse o costo aggiuntivo, selezionando Klarna o PayPal al momento del pagamento."
+                  a: `Sì, assolutamente! Al checkout puoi dividere l'intero importo di €${price} in 3 rate da soli €${(price / 3).toFixed(2)} al mese senza alcun interesse o costo aggiuntivo, selezionando Klarna o PayPal al momento del pagamento.`
                 }
               ].map((faq, fIdx) => (
                 <div 
@@ -1667,7 +1667,7 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {[
-                  { n: 1, title: "Copertina ed Offerta", desc: "Protocollo Schiena Libera €17" },
+                  { n: 1, title: "Copertina ed Offerta", desc: `Protocollo Schiena Libera €${price}` },
                   { n: 2, title: "Basta Soffrire in Silenzio", desc: "Dati epidemiologici e fitte diuretiche" },
                   { n: 3, title: "La Soluzione dell'Ufficio", desc: "Routine naturale di 10 min/giorno" },
                   { n: 4, title: "Tre Pilastri del Rilassamento", desc: "Dolore, Stato REM ed Energia" },

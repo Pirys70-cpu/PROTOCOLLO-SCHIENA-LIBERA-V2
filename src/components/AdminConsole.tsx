@@ -171,7 +171,7 @@ export default function AdminConsole({
       ...settings,
       pixelId: pixelInput.trim(),
       checkoutUrl: checkoutUrlInput.trim(),
-      price: parseFloat(priceInput) || 17,
+      price: parseFloat(priceInput) || 10,
       originalPrice: parseFloat(origPriceInput) || 47,
       spotsTotal: parseInt(spotsTotalInput) || 100,
       spotsLeft: parseInt(spotsLeftInput) || 24,
@@ -196,7 +196,7 @@ export default function AdminConsole({
       // Reset local fields
       setPixelInput("");
       setCheckoutUrlInput("https://pay.hotmart.com/Q105934024P?checkoutMode=10");
-      setPriceInput("17");
+      setPriceInput("10");
       setOrigPriceInput("47");
       setSpotsTotalInput("100");
       setSpotsLeftInput("24");

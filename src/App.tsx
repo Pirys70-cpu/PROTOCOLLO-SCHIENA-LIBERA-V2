@@ -8,7 +8,7 @@ import { Sliders, RefreshCw, Eye, Sparkles } from 'lucide-react';
 const DEFAULTS: LandingPageSettings = {
   pixelId: '', // Default blank to let user insert theirs
   checkoutUrl: 'https://pay.hotmart.com/Q105934024P?checkoutMode=10',
-  price: 17,
+  price: 10,
   originalPrice: 47,
   productName: 'Protocollo Schiena Libera',
   authorName: 'Dr. Marco Wellness',
@@ -31,8 +31,12 @@ export default function App() {
         // Migrate old 87 default to 47
         if (parsed.originalPrice === 87) {
           parsed.originalPrice = 47;
-          localStorage.setItem('schiena_libera_settings', JSON.stringify(parsed));
         }
+        // Migrate price 17 to 10
+        if (parsed.price === 17) {
+          parsed.price = 10;
+        }
+        localStorage.setItem('schiena_libera_settings', JSON.stringify(parsed));
         return { ...DEFAULTS, ...parsed };
       }
     } catch (e) {
