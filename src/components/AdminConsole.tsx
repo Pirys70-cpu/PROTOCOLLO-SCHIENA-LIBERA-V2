@@ -195,7 +195,7 @@ export default function AdminConsole({
       onResetDefaults();
       // Reset local fields
       setPixelInput("");
-      setCheckoutUrlInput("https://pay.hotmart.com/Q105934024P?checkoutMode=10");
+      setCheckoutUrlInput("https://pay.hotmart.com/Q105934024P?off=31ud8yrl&checkoutMode=10");
       setPriceInput("10");
       setOrigPriceInput("47");
       setSpotsTotalInput("100");

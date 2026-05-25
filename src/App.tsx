@@ -8,7 +8,7 @@ import { Sliders, RefreshCw, Eye, Sparkles } from 'lucide-react';
 
 const DEFAULTS: LandingPageSettings = {
   pixelId: '2583641632050405', // Default connected Meta Pixel ID
-  checkoutUrl: 'https://pay.hotmart.com/Q105934024P?checkoutMode=10',
+  checkoutUrl: 'https://pay.hotmart.com/Q105934024P?off=31ud8yrl&checkoutMode=10',
   price: 10,
   originalPrice: 47,
   productName: 'Protocollo Schiena Libera',
@@ -41,6 +41,10 @@ export default function App() {
         // Migrate price 17 to 10
         if (parsed.price === 17) {
           parsed.price = 10;
+        }
+        // Migrate old checkout URL to the new promo URL
+        if (!parsed.checkoutUrl || parsed.checkoutUrl === 'https://pay.hotmart.com/Q105934024P?checkoutMode=10') {
+          parsed.checkoutUrl = 'https://pay.hotmart.com/Q105934024P?off=31ud8yrl&checkoutMode=10';
         }
         // Migrate blank/empty pixelId to default
         if (!parsed.pixelId) {
