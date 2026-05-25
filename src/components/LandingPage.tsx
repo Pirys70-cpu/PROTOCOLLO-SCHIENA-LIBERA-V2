@@ -34,6 +34,7 @@ interface LandingPageProps {
   isAuthorized: boolean;
   settings: LandingPageSettings;
   onCallToAction: () => void;
+  onFirePixelEvent?: (eventName: string, parameters?: Record<string, any>) => void;
 }
 
 // Helper to convert Google Drive share URLs to direct image source URLs
@@ -85,9 +86,21 @@ const PURCHASES_LOG = [
   { name: "Chiara da Firenze", action: "ha attivato la garanzia soddisfatti o rimborsati", time: "8 min fa" }
 ];
 
-export default function LandingPage({ isAuthorized, settings, onCallToAction }: LandingPageProps) {
+export default function LandingPage({ isAuthorized, settings, onCallToAction, onFirePixelEvent }: LandingPageProps) {
   // Destructure dynamic configurations
   const { price, originalPrice, spotsLeft, supportEmail, supportWhatsapp } = settings;
+
+  // Track standard ViewContent Meta Pixel Event on mount
+  useEffect(() => {
+    if (onFirePixelEvent) {
+      onFirePixelEvent('ViewContent', {
+        content_name: settings.productName,
+        content_category: 'Digital Product / PDF Book',
+        value: settings.price,
+        currency: 'EUR'
+      });
+    }
+  }, [settings.productName, settings.price, onFirePixelEvent]);
 
   const discountPercent = originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
@@ -161,6 +174,16 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
       setTimeout(() => {
         setIsQuizCalculating(false);
         setQuizStep(QUIZ_QUESTIONS.length + 1);
+
+        // Track high-conversion Standard Lead Event on Meta Pixel
+        if (onFirePixelEvent) {
+          onFirePixelEvent('Lead', {
+            content_name: 'Quiz Schiena Libera Valutazione',
+            quiz_score: updatedAnswers.reduce((a, b) => a + b, 0),
+            value: 0,
+            currency: 'EUR'
+          });
+        }
       }, 1500);
     }
   };
@@ -1718,7 +1741,18 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction }: 
 
             <div className="flex items-center gap-3">
               {supportEmail && (
-                <a href={`mailto:${supportEmail}`} className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 font-bold">
+                <a 
+                  href={`mailto:${supportEmail}`} 
+                  onClick={() => {
+                    if (onFirePixelEvent) {
+                      onFirePixelEvent('Contact', {
+                        contact_method: 'Email',
+                        contact_recipient: supportEmail
+                      });
+                    }
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 font-bold"
+                >
                   <Mail className="w-4 h-4 text-violet-400" />
                   <span>Supporto Email</span>
                 </a>

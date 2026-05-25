@@ -494,22 +494,44 @@ export default function AdminConsole({
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     <button
                       onClick={() => onFireMockEvent('PageView')}
-                      className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-medium cursor-pointer transition-all"
+                      className="px-2 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-750 text-slate-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
                     >
                       PageView
                     </button>
                     <button
+                      onClick={() => onFireMockEvent('ViewContent')}
+                      className="px-2 py-1 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/20 text-blue-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
+                    >
+                      ViewContent
+                    </button>
+                    <button
+                      onClick={() => onFireMockEvent('Lead')}
+                      className="px-2 py-1 bg-violet-600/10 hover:bg-violet-600/20 border border-violet-500/20 text-violet-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
+                    >
+                      Lead (Quiz)
+                    </button>
+                    <button
+                      onClick={() => onFireMockEvent('Contact')}
+                      className="px-2 py-1 bg-cyan-600/10 hover:bg-cyan-600/20 border border-cyan-500/20 text-cyan-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
+                    >
+                      Contact
+                    </button>
+                    <button
                       onClick={() => onFireMockEvent('InitiateCheckout')}
-                      className="px-2.5 py-1.5 bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-200 rounded-lg text-xs font-medium cursor-pointer transition-all"
+                      className="px-2 py-1 bg-amber-600/15 hover:bg-amber-600/25 border border-amber-500/20 text-amber-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
                     >
                       InitiateCheckout
                     </button>
                     <button
                       onClick={() => onFireMockEvent('Purchase')}
-                      className="px-2.5 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-200 rounded-lg text-xs font-medium cursor-pointer transition-all col-span-2"
+                      className="px-2 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-200 rounded-lg text-[10px] sm:text-xs font-bold cursor-pointer transition-all"
                     >
-                      Purchase (Acquisto simulato €{settings.price})
+                      Purchase (€{settings.price})
                     </button>
+                  </div>
+                  <div className="bg-slate-900/30 p-2 rounded-lg border border-slate-800/80 text-[9px] text-slate-400 space-y-1">
+                    <p className="font-bold text-slate-300">💡 Come testare la pagina "Grazie":</p>
+                    <p>Reindirizza dal tuo checkout (es. Hotmart) o aggiungi <strong className="text-emerald-400">?grazie=true</strong> in fondo all'URL del sito per visualizzare la schermata di download protetto e lanciare un evento <span className="font-bold text-white">Purchase (Acquisto)</span> reale!</p>
                   </div>
                   <p className="text-[10px] text-slate-500">
                     *Nota: Se l'ID pixel è configurato, questi eventi vengono trasmessi realmente ai server di Meta (Facebook)!

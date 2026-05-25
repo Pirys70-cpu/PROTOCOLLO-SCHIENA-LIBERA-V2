@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import AdminConsole from './components/AdminConsole';
 import LandingPage from './components/LandingPage';
+import ThankYouPage from './components/ThankYouPage';
 import { LandingPageSettings, PixelEvent } from './types';
 import { initMetaPixel, firePixelEvent } from './utils/pixelHelper';
 import { Sliders, RefreshCw, Eye, Sparkles } from 'lucide-react';
 
 const DEFAULTS: LandingPageSettings = {
-  pixelId: '', // Default blank to let user insert theirs
+  pixelId: '2583641632050405', // Default connected Meta Pixel ID
   checkoutUrl: 'https://pay.hotmart.com/Q105934024P?checkoutMode=10',
   price: 10,
   originalPrice: 47,
@@ -23,6 +24,11 @@ const DEFAULTS: LandingPageSettings = {
 
 export default function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isThankYouPage, setIsThankYouPage] = useState(() => {
+    const search = window.location.search;
+    return search.includes('status=success') || search.includes('status=purchased') || search.includes('grazie=true');
+  });
+
   const [settings, setSettings] = useState<LandingPageSettings>(() => {
     try {
       const saved = localStorage.getItem('schiena_libera_settings');
@@ -35,6 +41,10 @@ export default function App() {
         // Migrate price 17 to 10
         if (parsed.price === 17) {
           parsed.price = 10;
+        }
+        // Migrate blank/empty pixelId to default
+        if (!parsed.pixelId) {
+          parsed.pixelId = '2583641632050405';
         }
         localStorage.setItem('schiena_libera_settings', JSON.stringify(parsed));
         return { ...DEFAULTS, ...parsed };
@@ -64,6 +74,21 @@ export default function App() {
       console.log('[Meta Pixel] No Pixel ID configured. Operating in simulation log mode.');
     }
   }, [settings.pixelId]);
+
+  // Handle standard Purchase detection hook on mount
+  useEffect(() => {
+    if (isThankYouPage) {
+      const payload = {
+        value: settings.price,
+        currency: 'EUR',
+        content_name: settings.productName,
+        content_category: 'Digital Product / PDF Book',
+        num_items: 1
+      };
+      firePixelEvent('Purchase', payload, settings.pixelId, addPixelLog);
+      console.log('🎉 Fired Meta Pixel Purchase Event dynamically!', payload);
+    }
+  }, [isThankYouPage, settings.price, settings.productName, settings.pixelId]);
 
   // Handle CTA actions: InitiateCheckout event and then redirect
   const handleCheckoutRedirect = () => {
@@ -97,6 +122,11 @@ export default function App() {
     }, delay);
   };
 
+  // General wrapper for component standard event dispatches
+  const handleFirePixelEvent = (eventName: string, parameters: Record<string, any> = {}) => {
+    firePixelEvent(eventName, parameters, settings.pixelId, addPixelLog);
+  };
+
   // Manual trace events for dashboard testers
   const handleFireMockEvent = (eventName: string) => {
     const payload: Record<string, any> = {
@@ -117,6 +147,7 @@ export default function App() {
     setSettings(DEFAULTS);
     localStorage.removeItem('schiena_libera_settings');
     setPixelEvents([]);
+    setIsThankYouPage(false);
     
     // Trigger simulated page view after reset
     if (DEFAULTS.pixelId) {
@@ -136,7 +167,7 @@ export default function App() {
 
   // Initial trigger simulation logged if page loads first time without real pixel
   useEffect(() => {
-    if (!settings.pixelId) {
+    if (!settings.pixelId && !isThankYouPage) {
       const initEvent: PixelEvent = {
         id: 'initial-load',
         timestamp: new Date().toISOString().split('T')[1].slice(0, 8),
@@ -163,12 +194,25 @@ export default function App() {
         onResetDefaults={handleResetDefaults}
       />
 
-      {/* 2. THE HIGH CONVERTING SALES LANDING PAGE */}
-      <LandingPage
-        isAuthorized={isAuthorized}
-        settings={settings}
-        onCallToAction={handleCheckoutRedirect}
-      />
+      {/* 2. THE HIGH CONVERTING SALES LANDING PAGE or THANK YOU PAGE */}
+      {isThankYouPage ? (
+        <ThankYouPage
+          settings={settings}
+          onBackToHome={() => {
+            try {
+              window.history.pushState({}, '', window.location.pathname);
+            } catch (e) {}
+            setIsThankYouPage(false);
+          }}
+        />
+      ) : (
+        <LandingPage
+          isAuthorized={isAuthorized}
+          settings={settings}
+          onCallToAction={handleCheckoutRedirect}
+          onFirePixelEvent={handleFirePixelEvent}
+        />
+      )}
     </div>
   );
 }
