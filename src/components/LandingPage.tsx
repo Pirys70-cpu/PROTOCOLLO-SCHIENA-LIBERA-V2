@@ -104,6 +104,24 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
 
   const discountPercent = originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
+  // Active Campaign context: 'computer' (for "3 Protocollo Schiena Libera inserzione Vendite") or 'sveglia' (for "Sveglia delle 6:30")
+  const [activeCampaign, setActiveCampaign] = useState<'computer' | 'sveglia'>('computer');
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const campaign = params.get('utm_campaign') || params.get('campaign') || params.get('ad') || '';
+      const content = params.get('utm_content') || '';
+      if (campaign.toLowerCase().includes('sveglia') || content.toLowerCase().includes('sveglia')) {
+        setActiveCampaign('sveglia');
+      } else {
+        setActiveCampaign('computer');
+      }
+    } catch (e) {
+      setActiveCampaign('computer');
+    }
+  }, []);
+
   // Countdown timer state
   const [countdown, setCountdown] = useState({ min: 14, sec: 59, ms: 99 });
 
@@ -288,6 +306,76 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
               Liberati dal dolore e dalla rigidità senza farmaci, anche con soli{' '}
               <span className="text-amber-400 font-black underline decoration-amber-400/50 decoration-2">10 minuti al giorno</span>
             </p>
+
+            {/* Interactive Campaign Selection Selector & Content Syncing Widget */}
+            <div className="mt-8 max-w-2xl mx-auto bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-3xl p-5 shadow-2xl relative overflow-hidden text-left">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-violet-600/5 rounded-full blur-2xl pointer-events-none" />
+              
+              <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest text-center mb-3">
+                🎯 SELEZIONA IL TUO FLUSSO DA ANNUNCIO FACEBOOK/INSTAGRAM RILEVATO:
+              </p>
+              
+              <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-950 rounded-2xl border border-slate-850/80 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveCampaign('computer')}
+                  className={`py-2.5 px-3 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeCampaign === 'computer'
+                      ? 'bg-violet-650 text-white shadow-lg border border-violet-500/30'
+                      : 'text-slate-400 hover:text-white bg-transparent'
+                  }`}
+                >
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>Schiena al Computer</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveCampaign('sveglia')}
+                  className={`py-2.5 px-3 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeCampaign === 'sveglia'
+                      ? 'bg-violet-650 text-white shadow-lg border border-violet-500/30'
+                      : 'text-slate-400 hover:text-white bg-transparent'
+                  }`}
+                >
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Sveglia delle 6:30</span>
+                </button>
+              </div>
+
+              {activeCampaign === 'computer' ? (
+                <div className="space-y-2.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5 text-emerald-400 font-extrabold uppercase text-[9px] bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded tracking-wide font-sans shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      Annuncio "Basta dolori al PC"
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-extrabold lowercase tracking-wider bg-slate-950 px-2 py-0.5 rounded border border-slate-850/50 uppercase">OFFERTA €{price} VALIDA OGGI</span>
+                  </div>
+                  <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-tight font-display leading-tight">
+                    "BASTA DOLORI DOPO ORE AL COMPUTER!" — RIDUCI IL DOLORE DELL'80% IN UNA SETTIMANA
+                  </h4>
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                    Se trascorri più di 6 ore al giorno seduto e soffri di stanchezza fisica o debolezza lombare, questo è il manuale biologico da 10 minuti approvato da fisioterapisti. Il <strong className="text-amber-400">94% dei professionisti sedentari</strong> ha eliminato il dolore in una settimana.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5 text-yellow-300 font-extrabold uppercase text-[9px] bg-yellow-500/10 border border-yellow-500/20 px-2.5 py-0.5 rounded tracking-wide font-sans shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 shrink-0 animate-pulse" />
+                      Annuncio "Sveglia rigidità"
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-extrabold lowercase tracking-wider bg-slate-950 px-2 py-0.5 rounded border border-slate-850/50 uppercase">SBLOCCO LOMBARE</span>
+                  </div>
+                  <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-tight font-display leading-tight">
+                    ORE 6:30: SUONA LA SVEGLIA... ORE 6:31: TI SVEGLI RIGIDO COME UN TRONCO DI LEGNO?
+                  </h4>
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                    Se soffri di estrema rigidezza mattutina appena metti i piedi a terra, questo è il protocollo da 10 minuti del Dr. Marco. Decondiziona all'istante l'effetto "cemento" lombare richiamando l'acqua e il nutrimento biologico ai dischi L4-L5 compattati di notte.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mt-6">
@@ -356,12 +444,12 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
                   <ChevronRight className="w-5.5 h-5.5 stroke-[3px]" />
                 </motion.button>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-500 px-2 flex-wrap gap-2">
-                  <span className="flex items-center gap-1">
-                    <Lock className="w-3.5 h-3.5 text-slate-600" /> Transazione protetta a 256-bit
+                <div className="flex items-center justify-between text-[11px] text-slate-500 px-2 flex-wrap gap-2 pt-1">
+                  <span className="flex items-center gap-1 font-extrabold text-amber-500 bg-amber-500/5 border border-amber-500/10 px-2.5 py-1 rounded">
+                    🛡️ PAGAMENTO UNICO • NO ABBONAMENTO
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-slate-400">
-                    <Activity className="w-3.5 h-3.5 text-emerald-500" /> Accesso inviato all'istante via Email
+                    <Activity className="w-3.5 h-3.5 text-emerald-500" /> Accesso a vita ed invio istantaneo
                   </span>
                 </div>
               </div>
@@ -476,61 +564,114 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
         </div>
       </section>
 
-      {/* SECTION 2: BASTA SOFFRIRE IN SILENZIO (Slide 2) */}
+      {/* SECTION 2: BASTA SOFFRIRE IN SILENZIO (Slide 2 - MATCHED TO "SVEGLIA 6:30" & "VENDITE PC" AD CAMPAIGNS) */}
       <section id="section-pain" className="py-16 md:py-24 bg-slate-950 relative border-b border-violet-950/20">
         <div className="max-w-6xl mx-auto px-4">
           
           <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-black text-white font-display mb-3 uppercase tracking-tight">
-              BASTA SOFFRIRE IN SILENZIO
-            </h2>
-            <p className="text-lg text-violet-300 font-medium">
-              Se trascorri molte ore al giorno seduto e soffri di stanchezza fisica, leggi con attenzione.
-            </p>
+            <span className="bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] font-black tracking-widest px-3.5 py-1.5 rounded-full uppercase inline-block mb-3 animate-pulse">
+              ⚠️ COERENZA DELL'OFFERTA & DIAGNOSTICA
+            </span>
+            {activeCampaign === 'computer' ? (
+              <>
+                <h2 className="text-3xl sm:text-5xl font-black text-white font-display mb-3 uppercase tracking-tight leading-none">
+                  IL CIRCOLO VIZIOSO DELLA POSTURA:<br className="hidden sm:inline" />
+                  <span className="text-red-500">DAI DOLORI AL PC A UNA SCHIENA INCEMENTATA</span>
+                </h2>
+                <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mt-2 leading-relaxed font-semibold">
+                  Quando trascorri oltre 4 ore seduto, la gravità asimmetrica comprime i dischi vertebrali bloccando i nutrienti. Senza scarico attivo, soffri in silenzio e rischi contratture croniche e infiammazioni.
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl sm:text-5xl font-black text-white font-display mb-3 uppercase tracking-tight leading-none">
+                  ORE 6:30: SUONA LA SVEGLIA...<br className="hidden sm:inline" />
+                  <span className="text-red-500">ORE 6:31: "AHH, DI NUOVO DI MARMO..."</span>
+                </h2>
+                <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mt-2 leading-relaxed">
+                  Chi trascorre più di 6 ore al giorno seduto davanti a uno schermo sperimenta questa identica scena ogni mattina. Se anche tu vivi questo circolo vizioso, leggi con estrema attenzione ciò che scoprirai qui sotto.
+                </p>
+              </>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
             {/* Left Column: Pain Image Representation (recreating Slide 2) */}
-            <div className="lg:col-span-6 flex justify-center">
-              <div className="relative w-full max-w-[465px] aspect-square rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl group">
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent z-10" />
-                
-                {/* Professional sitting at his office desk experiencing severe back and postural stiffness */}
-                <div className="absolute inset-0">
+            <div className="lg:col-span-5 flex flex-col justify-between">
+              <div className="relative w-full h-full min-h-[320px] rounded-2xl overflow-hidden border border-red-500/20 shadow-2xl group bg-slate-900/40 flex flex-col justify-between p-6">
+                <div className="absolute inset-0 z-0">
                   <img 
                     src={getDirectImageUrl("https://drive.google.com/file/d/1lqoAbPM_xgiHqJN8htzRX_GMOnoCHX0s/view?usp=sharing")} 
                     alt="Lavoratore con mal di schiena e stress da ufficio" 
-                    className="w-full h-full object-cover opacity-80"
+                    className="w-full h-full object-cover opacity-30 select-none group-hover:scale-105 transition-all duration-700 font-sans"
                     referrerPolicy="no-referrer"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
                 </div>
                 
-                {/* Alarm block warning banner */}
-                <div className="absolute bottom-6 left-6 right-6 z-20 bg-slate-950/95 border border-red-500/30 p-4 rounded-xl shadow-2xl">
-                  <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider mb-1">
-                    <AlertCircle className="w-4 h-4 text-red-500 animate-bounce" />
-                    <span>Postura statica prolungata</span>
+                {/* Combined visual layout depending on current campaign state */}
+                <div className="relative z-10 flex flex-col gap-3">
+                  <div className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-xl self-start">
+                    <AlertCircle className="w-4 h-4 animate-bounce" />
+                    <span>{activeCampaign === 'computer' ? "INCHIODATO ALLA SEDIA" : "SVEGLIA SINDROMICA MATTUTINA"}</span>
                   </div>
-                  <p className="text-xs text-slate-300">
-                    Stare seduti provoca uno schiacciamento asimmetrico continuo che disidrata i dischi lombari, bloccando l'afflusso naturale dei liquidi lubrificanti.
+                  
+                  <div className="text-left mt-2">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+                      {activeCampaign === 'computer' ? "BLOCCO POSTURALE DA UFFICIO" : "STATO DI ACCUMULO IN SONNO"}
+                    </span>
+                    <span className="text-yellow-400 font-sans font-black text-2xl tracking-tight block">
+                      {activeCampaign === 'computer' ? "COMPRESSIONE IN SEDIA" : "COMPRESSIONE SILENTE"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Alarm block warning banner */}
+                <div className="relative z-10 bg-slate-950/95 border border-red-500/30 p-4 rounded-xl shadow-2xl mt-4 text-left">
+                  <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider mb-1">
+                    <Activity className="w-4 h-4 text-red-500" />
+                    <span>{activeCampaign === 'computer' ? "Schiacciamento continuo" : "L'idratazione interrotta"}</span>
+                  </div>
+                  <p className="text-[11px] text-slate-300 leading-normal">
+                    {activeCampaign === 'computer' ? (
+                      "Ogni ora seduto alla scrivania agisce come un torchio idraulico sulle tue vertebre lombari L4-L5 ed S1. Senza lubrificazione costante o movimenti decondizionanti, i dischi si disidratano provocando fitte acute, rigidità e riducendo l'energia mentale del 50% entro il pomeriggio."
+                    ) : (
+                      "Durante la notte la colonna prova a reidratare i dischi disidratati dalle ore trascorse seduti. Ma senza scarico attivo o lubrificazione vertebrale iniziale, i muscoli si contraggono istantaneamente al risveglio per auto-tutela, creando quel faticoso \"effetto cemento\" lombare."
+                    )}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Pain statements mimicking the core bulletin of Slide 2 */}
-            <div className="lg:col-span-6 space-y-6">
+            {/* Right Column: Dynamic Timeline of the Morning Stiffness Vicious Cycle */}
+            <div className="lg:col-span-7 space-y-6 flex flex-col justify-center">
               <h3 className="text-xl sm:text-2xl font-extrabold text-slate-100 uppercase tracking-tight leading-snug">
-                Soffri regolarmente di uno di questi sintomi fastidiosi?
+                La giornata-trappola del professionista sedentario:
               </h3>
 
-              <div className="space-y-4">
+              <div className="relative border-l-2 border-red-500/20 pl-4 sm:pl-6 ml-2 space-y-5">
                 {[
-                  { text: "Rigidità mattutina che ti blocca", desc: "Svegliarsi rigidi come un tronco di legno e impiegare ore anche solo per allacciarsi le scarpe." },
-                  { text: "Dolore lombare acuto dopo ore al laptop", desc: "Quella sgradevole, sorda e insistente tensione che sorge dopo pranzo e logora la tua concentrazione." },
-                  { text: "Difficoltà ad alzarsi fluidamente dalla sedia", desc: "Dover tenersi i fianchi doloranti per i primi passi sperando che le vertebre ritrovino la postura." },
-                  { text: "Insonnia frequente per disagio posturale", desc: "Continuare a rigirarsi alla ricerca dell'angolo ideale, svegliandosi stanchi e svuotati di energia." }
+                  { 
+                    time: "ORE 6:30", 
+                    title: "La sveglia suona nel letto", 
+                    desc: "La colonna non si è rilassata veramente. Avverti immediatamente quel peso sordo e legnoso che limita ogni movimento."
+                  },
+                  { 
+                    time: "ORE 6:31", 
+                    title: "I piedi toccano il pavimento", 
+                    desc: "Il primo passo. Quella sensazione dolorosa che ti costringe a camminare leggermente proteso in avanti prima di riscaldarti fatidicamente."
+                  },
+                  { 
+                    time: "ORE 9:30", 
+                    title: "L'inizio dell'effetto pressa in sedia d'ufficio", 
+                    desc: "Seduto al computer, la pressione sui dischi lombari aumenta del 40% rispetto allo stare in piedi, eliminando i nutrimenti biologici."
+                  },
+                  { 
+                    time: "ORE 18:00", 
+                    title: "La serata con la lombare di cemento", 
+                    desc: "Tensione accumulata, concentrazione finita, schiena bloccata. Ti senti scarico ed eviti persino lo sport o i giochi con i figli."
+                  }
                 ].map((item, index) => (
                   <motion.div 
                     initial={{ opacity: 0, x: 20 }}
@@ -538,11 +679,17 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                     key={index}
-                    className="flex gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-red-500/25 transition-all group"
+                    className="relative bg-slate-900/40 border border-slate-800 hover:border-red-500/20 p-4.5 rounded-xl transition-all group flex flex-col sm:flex-row gap-3 items-start"
                   >
-                    <div className="w-3.5 h-3.5 rounded-full bg-red-500/80 mt-1 shrink-0 group-hover:scale-125 transition-transform shadow-[0_0_10px_rgba(239,68,68,0.3)]" />
+                    {/* Ring Indicator mapped precisely onto the timeline line */}
+                    <div className="absolute -left-[23.5px] top-[22px] w-3.5 h-3.5 rounded-full bg-slate-950 border-2 border-red-500 group-hover:scale-125 transition-transform" />
+                    
+                    <div className="bg-red-500/10 border border-red-500/25 text-red-400 font-mono text-xs font-black px-2.5 py-1 rounded shrink-0 self-start">
+                      {item.time}
+                    </div>
+                    
                     <div>
-                      <h4 className="font-extrabold text-white text-base tracking-tight">{item.text}</h4>
+                      <h4 className="font-extrabold text-white text-base tracking-tight">{item.title}</h4>
                       <p className="text-xs text-slate-400 mt-1 leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.div>
@@ -550,8 +697,8 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
               </div>
 
               {/* Statistic verification banner */}
-              <div className="bg-slate-900/60 border border-slate-800/85 rounded-xl p-4 text-center text-slate-300 font-medium text-xs sm:text-sm">
-                📢 <span className="text-indigo-400 font-bold">Istruttoria Epidemiologica:</span> Più dell'82% dei copywriter, ingegneri, e impiegati d'ufficio italiani soffre di compressione discale silente.
+              <div className="bg-slate-900/60 border border-slate-850 rounded-xl p-4 text-center text-slate-300 font-medium text-xs sm:text-sm">
+                📢 <span className="text-indigo-400 font-bold">Istruttoria Epidemiologica:</span> Più dell'82% dei lavoratori d'ufficio e desk manager italiani soffre di compressione lombare precoce silente.
               </div>
               
             </div>
@@ -684,17 +831,22 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800 pt-4">
-                  <button
-                    onClick={handleResetQuiz}
-                    className="text-xs text-slate-450 hover:text-slate-300 underline cursor-pointer"
-                  >
-                    Ripeti il test diagnostico
-                  </button>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800 pt-5 mt-4">
+                  <div className="text-left space-y-1">
+                    <button
+                      onClick={handleResetQuiz}
+                      className="text-xs text-slate-500 hover:text-slate-300 underline cursor-pointer block font-semibold text-center sm:text-left"
+                    >
+                      Ripeti il test diagnostico
+                    </button>
+                    <span className="text-[10px] text-amber-500 font-extrabold block uppercase tracking-wider text-center sm:text-left animate-pulse">
+                      🛡️ PAGAMENTO UNICO • NO ABBONAMENTO
+                    </span>
+                  </div>
 
                   <button
                     onClick={onCallToAction}
-                    className="bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-xs font-black uppercase tracking-wider py-3 px-6 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-lg border-b-2 border-yellow-600 font-sans"
+                    className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-xs font-black uppercase tracking-wider py-3.5 px-6 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg border-b-2 border-yellow-600 font-sans"
                     id="btn-quiz-cta"
                   >
                     <span>Ottieni il Protocollo (€{price})</span>
@@ -735,8 +887,8 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
                 {[
                   { title: "Solo 10 minuti di orologio", detail: "Routine rapidissime strutturate per essere eseguite comodamente a casa tua appena ti svegli o prima di dormire." },
                   { title: "Esercizi discreti applicabili in sedia d'ufficio", detail: "Movimenti leggeri, eleganti e non visibili ad altri, ideali per rimettere in circolo l'acqua vertebrale a metà mattina." },
-                  { title: "Nessun attrezzo sportivo richiesto", detail: "Cura la tua colonna ovunque tu sia, senza pesi, fasce elastiche o tappeti ingombranti." },
-                  { title: "Risultati clinici concreti in 7 giorni", detail: "La sequenza studiata toglie il carico di schiacciamento ristabilendo la de-compressione e diminuendo la morsa dolorosa." }
+                  { title: "Metodo naturale approvato da fisioterapisti", detail: "Postura scientifica convalidata da esperti della riabilitazione per sbloccare le vertebre e preservare la salute della colonna." },
+                  { title: "Riduzione dell'80% del dolore in 7 giorni", detail: "La sequenza studiata toglie il carico di schiacciamento accumulato in ufficio, ripristinando la decompressione dinamica dei dischi." }
                 ].map((checkbox, idx) => (
                   <motion.div 
                     initial={{ opacity: 0, x: -25 }}
@@ -1571,9 +1723,14 @@ export default function LandingPage({ isAuthorized, settings, onCallToAction, on
                 </p>
               </div>
 
-              <p className="text-xs text-slate-400 font-medium pt-1">
-                Paga una sola volta. Nessun rinnovo mensile. Accesso ed aggiornamenti a vita.
-              </p>
+              <div className="bg-amber-400/5 border border-amber-400/20 max-w-md mx-auto py-2.5 px-4 rounded-xl shadow-inner mt-2">
+                <p className="text-xs text-amber-500 font-black uppercase tracking-wide flex items-center justify-center gap-1.5 leading-none">
+                  🔒 PAGAMENTO UNICO • NO ABBONAMENTO
+                </p>
+                <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                  Nessun costo ricorrente o addebito automatico futuro. Paghi solo €{price} una volta sola ed hai il manuale PDF a vita.
+                </p>
+              </div>
             </div>
 
             {/* Big Closing Yellow Trigger Button */}
