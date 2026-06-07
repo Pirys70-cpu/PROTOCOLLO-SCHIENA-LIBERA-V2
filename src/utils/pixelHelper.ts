@@ -4,6 +4,7 @@ declare global {
   interface Window {
     fbq?: any;
     _fbq?: any;
+    _fbq_initialized_pixels?: string[];
   }
 }
 
@@ -17,14 +18,14 @@ export function initMetaPixel(pixelId: string, onEventFired?: (event: PixelEvent
 
   try {
     // Custom script injection standard for Meta Pixel
-    const f = window;
+    const f = window as any;
     const b = document;
     const e = 'script';
     const v = 'https://connect.facebook.net/en_US/fbevents.js';
 
     if (!f.fbq) {
-      const n: any = function (...args: any[]) {
-        n.callMethod ? n.callMethod.apply(n, args) : n.queue.push(args);
+      const n: any = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
       };
       if (!f._fbq) f._fbq = n;
       n.push = n;
@@ -41,11 +42,20 @@ export function initMetaPixel(pixelId: string, onEventFired?: (event: PixelEvent
       } else {
         b.head.appendChild(t);
       }
-      f.fbq = n;
+    }
+
+    // Guard against multiple FB Pixel "init" calls for the same ID to prevent Meta Pixel Helper errors/warnings about duplicate registration
+    f._fbq_initialized_pixels = f._fbq_initialized_pixels || [];
+    if (f._fbq_initialized_pixels.includes(pixelId)) {
+      console.log(`[Meta Pixel] Pixel ${pixelId} is already initialized. Skipping duplicate fbq('init').`);
+      // Trigger PageView for subsequent mounts/views
+      firePixelEvent('PageView', {}, pixelId, onEventFired);
+      return true;
     }
 
     // Initialize the Pixel
-    window.fbq('init', pixelId);
+    f.fbq('init', pixelId);
+    f._fbq_initialized_pixels.push(pixelId);
     
     // Track PageView immediately on load
     firePixelEvent('PageView', {}, pixelId, onEventFired);
