@@ -19,7 +19,8 @@ import {
   Sliders,
   Mail,
   MessageCircle,
-  Code
+  Code,
+  ShieldAlert
 } from 'lucide-react';
 import { LandingPageSettings, PixelEvent } from '../types';
 
@@ -482,6 +483,41 @@ export default function AdminConsole({
                 exit={{ opacity: 0, y: -5 }}
                 className="grid grid-cols-1 md:grid-cols-3 gap-5"
               >
+                {/* 🛡️ Meta Pixel Helper & AdBlocker Diagnostics Banner */}
+                <div className="col-span-1 md:col-span-3 bg-gradient-to-r from-amber-500/10 to-amber-600/5 border border-amber-500/25 rounded-2xl p-4.5 shadow-lg flex flex-col sm:flex-row gap-4.5 items-start">
+                  <div className="bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20 text-amber-500 shrink-0">
+                    <ShieldAlert className="w-5.5 h-5.5" />
+                  </div>
+                  <div className="space-y-2 flex-grow">
+                    <h4 className="font-extrabold text-xs sm:text-sm text-amber-500 uppercase tracking-wider flex items-center gap-1.5 leading-none">
+                      ⚠️ IL "META PIXEL HELPER" CHROME DICE CHE IL PIXEL NON ESISTE?
+                    </h4>
+                    <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed md:max-w-5xl">
+                      Se l'estensione ufficiale di Chrome <strong className="text-white">Meta Pixel Helper</strong> rimane grigia, segui queste 3 verifiche obbligatorie dovute alle politiche di sicurezza del browser e dell'ambiente sandbox di sviluppo:
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1.5">
+                      <div className="bg-slate-950/60 border border-slate-850 p-3 rounded-xl space-y-1">
+                        <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-widest block">1. ESCI DALL'IFRAME (PROVA SU NUOVA SCHEDA)</span>
+                        <p className="text-[9.5px]/[14px] text-slate-400">
+                          La finestra di anteprima interna di AI Studio è un <strong>iFrame</strong>. Per motivi di sicurezza del browser, l'estensione Chrome non può ispezionarne l'interno. <strong>Apri l'applicazione in una scheda separata</strong> usando il pulsante link "Apri in una Nuova Scheda" in alto per testare il pixel reale!
+                        </p>
+                      </div>
+                      <div className="bg-slate-950/60 border border-slate-850 p-3 rounded-xl space-y-1">
+                        <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-widest block">2. DISATTIVA L'ADBLOCK / BRAVE SHIELDS</span>
+                        <p className="text-[9.5px]/[14px] text-slate-400">
+                          AdBlock, uBlock Origin e <strong>Brave Shields</strong> riconoscono e bloccano all'istante la libreria di tracciamento esterna di Facebook (<code className="bg-slate-900 border border-slate-850 px-1 py-0.2 rounded text-rose-300">fbevents.js</code>). Disattivali per far caricare il Pixel!
+                        </p>
+                      </div>
+                      <div className="bg-slate-950/60 border border-slate-850 p-3 rounded-xl space-y-1">
+                        <span className="text-[10px] text-amber-500 font-extrabold uppercase tracking-widest block">3. ASSICURATI DI AVER SALVATO L'ID PIXEL</span>
+                        <p className="text-[9.5px]/[14px] text-slate-400">
+                          Per attivare il codice di Meta, l'ID Pixel numerico deve essere inserito nella scheda "Configurazione Dati" (ID corrente: <code className="bg-slate-900 border border-slate-850 px-1 py-0.2 rounded text-emerald-300">{settings.pixelId || 'mancante'}</code>) e salvato. Se è vuoto gira solo il simulatore!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Event Simulator triggers */}
                 <div className="bg-slate-950/40 p-3.5 rounded-xl border border-slate-800 space-y-3">
                   <div className="font-semibold text-xs text-violet-300 uppercase tracking-wider flex items-center gap-1.5">
